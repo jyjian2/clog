@@ -23,7 +23,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -38,14 +38,14 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="final_project" type="Python.DjangoServer" factoryName="Django server">
+    <configuration name="jian_jiayi_final_project" type="Python.DjangoServer" factoryName="Django server">
       <module name="jian_jiayi_final_project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="/usr/local/anaconda3/envs/jian_jiayi_final_project/bin/python" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -76,7 +76,10 @@
       <workItem from="1572578450756" duration="5000" />
       <workItem from="1572731919338" duration="873000" />
       <workItem from="1572732926211" duration="11000" />
-      <workItem from="1572733027980" duration="401000" />
+      <workItem from="1572733027980" duration="993000" />
+      <workItem from="1572735950971" duration="2586000" />
+      <workItem from="1572986049302" duration="36000" />
+      <workItem from="1572986128111" duration="7299000" />
     </task>
     <servers />
   </component>
