@@ -1,0 +1,28 @@
+{% block title %}
+    ingredient - {{ ingredient }}
+{%  endblock %}
+
+{% block content %}
+<h2>{{ ingredient }}</h2>
+
+<section>
+    <table>
+        <tr>
+            <th>Ingredient Name:</th>
+            <td>{{ ingredient }}</td>
+        </tr>
+    </table>
+</section>
+<section>
+    <h3>Recipes</h3>
+    <ul>
+        {% for recipe in recipe_list %}
+        <li>
+            <a href="">{{ recipe }}</a>
+        </li>
+        {% empty %}
+        <li><em>There are currently no recipes for this ingredient.</em></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% block title %}
+    ingredient - {{ beverage }}
+{%  endblock %}
+
+{% block content %}
+<h2>{{ beverage }}</h2>
+
+<section>
+    <table>
+        <tr>
+            <th>Beverage Name:</th>
+            <td>{{ beverage }}</td>
+        </tr>
+    </table>
+</section>
+<section>
+    <h3>Beverages</h3>
+    <ul>
+        {% for beverage in beverage_list %}
+        <li>
+            <a href="">{{ beverage }}</a>
+        </li>
+        {% empty %}
+        <li><em>There are currently no suitable beverages for this recipe.</em></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

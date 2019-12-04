@@ -1,0 +1,20 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Beverage List
+{% endblock %}
+
+
+{% block content %}
+<h2>Beverage List</h2>
+<ul>
+    {% for beverage in beverage_list %}
+        <li>
+        <a href="">{{ beverage }}</a>
+        </li>
+    {% empty %}
+{#        empty is like the end of for loop. When ingredient_list is empty, stopped. #}
+        <li><em>There are currently no beverages in the list.</em></li>
+    {% endfor %}
+</ul>
+{% endblock %}
