@@ -29,6 +29,7 @@ class Recipe_Type(models.Model):
     class Meta:
         ordering = ['recipe_type_name']
 
+
 class Beverage(models.Model):
     beverage_id = models.AutoField(primary_key=True)
     beverage_name = models.CharField(max_length=45)
@@ -39,6 +40,7 @@ class Beverage(models.Model):
 
     class Meta:
         ordering = ['beverage_type']
+
 
 class Recipe(models.Model):
     recipe_id = models.AutoField(primary_key=True)
@@ -56,35 +58,12 @@ class Recipe(models.Model):
 
 class Recipe_Ingredient(models.Model):
     recipe_ingredient_id = models.AutoField(primary_key=True)
-    recipe_ingredient_name = models.CharField(max_length=45)
     ingredient = models.ForeignKey(Ingredient, related_name='recipe_ingredients', on_delete=models.PROTECT)
     recipe = models.ForeignKey(Recipe, related_name='recipe_ingredients', on_delete=models.PROTECT)
 
+
 class Beverage_Ingredient(models.Model):
     beverage_ingredient_id = models.AutoField(primary_key=True)
-    beverage_ingredient_name = models.CharField(max_length=45)
     ingredient = models.ForeignKey(Ingredient, related_name='beverage_ingredients', on_delete=models.PROTECT)
     beverage = models.ForeignKey(Beverage, related_name='beverage_ingredients', on_delete=models.PROTECT)
-
-
-
-
-
-
-
-
-# class Meta:
-#     ingredient_recipe_id = models.AutoField(primary_key=True)
-#     ingredient = models.ForeignKey(Ingredient, related_name='recipe_ingredients', on_delete=models.PROTECT)
-#     recipe = models.ForeignKey(Recipe, related_name='recipe_ingredients', on_delete=models.PROTECT)
-#     beverage = models.ForeignKey(Beverage, related_name='beverage', on_delete=models.PROTECT)
-#
-#     def __str__(self):
-#         return '%s - %s' % (self.ingredient, self.recipe.recipe_name)
-#
-#     class Meta:
-#         ordering = ['ingredient']
-#         unique_together = (('ingredient', 'recipe'))
-
-
 
