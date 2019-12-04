@@ -47,6 +47,11 @@ class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     category_name = models.CharField(max_length=45, unique=True)
 
+
+class Recipe_Type(models.Model):
+    recipe_type_id = models.AutoField(primary_key=True)
+    recipe_type_name = models.CharField(max_length=45)
+
 # class Meta:
 #     ingredient_recipe_id = models.AutoField(primary_key=True)
 #     ingredient = models.ForeignKey(Ingredient, related_name='recipe_ingredients', on_delete=models.PROTECT)
