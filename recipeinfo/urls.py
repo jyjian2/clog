@@ -7,7 +7,9 @@ from recipeinfo.views import (
     CategoryList,
     CategoryDetail,
     Recipe_TypeList,
+    Recipe_TypeDetail,
     BeverageList,
+    BeverageDetail,
     RecipeList,
 )
 
@@ -36,9 +38,17 @@ urlpatterns = [
          Recipe_TypeList.as_view(),
          name='recipeinfo_recipe_type_list_urlpattern'),
 
+    path('recipe_types/<int:pk>/',
+        Recipe_TypeDetail.as_view(),
+         name='recipeinfo_recipe_type_detail_urlpattern'),
+
     path('beverages/',
          BeverageList.as_view(),
          name='recipeinfo_beverage_list_urlpattern'),
+
+    path('beverages/<int:pk>/',
+        BeverageDetail.as_view(),
+         name='recipeinfo_beverage_detail_urlpattern'),
 
     path('recipes/',
          RecipeList.as_view(),

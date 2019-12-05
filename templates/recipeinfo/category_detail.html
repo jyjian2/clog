@@ -1,7 +1,7 @@
 {% extends 'recipeinfo/base.html' %}
 
 {% block title %}
-    Ingredient Category - {{ category }}
+    Ingredient of the Category - {{ category }}
 {%  endblock %}
 
 {% block content %}
@@ -9,14 +9,14 @@
 
 
 <section>
-    <h3>Ingredient Category</h3>
+    <h3>Ingredients Belong to the Category</h3>
     <ul>
         {% for i in ingredient_list %}
         <li>
             <a href="">{{ i }}</a>
         </li>
         {% empty %}
-        <li><em>The ingredients are currently not belongs to any categories.</em></li>
+        <li><em>The ingredients are currently not belong to any categories.</em></li>
         {% endfor %}
     </ul>
 </section>

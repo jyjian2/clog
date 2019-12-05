@@ -1,21 +1,21 @@
 {% extends 'recipeinfo/base.html' %}
 
 {% block title %}
-    Beverage - {{ beverage }}
+    Recipe Type - {{ recipe_type.recipe_type_name }}
 {%  endblock %}
 
 {% block content %}
-<h2>{{ beverage }}</h2>
+<h2>{{ recipe_type.recipe_type_name }}</h2>
 
 <section>
-    <h3>Recipes</h3>
+    <h3>Recipes belong to this recipe type:</h3>
     <ul>
         {% for r in recipe_list %}
         <li>
             <a href="">{{ r }}</a>
         </li>
         {% empty %}
-        <li><em>The beverages are currently not suitable for any recipes.</em></li>
+        <li><em>The recipe type currently does not have any recipes.</em></li>
         {% endfor %}
     </ul>
 </section>

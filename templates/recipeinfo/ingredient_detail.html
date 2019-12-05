@@ -1,3 +1,5 @@
+{% extends 'recipeinfo/base.html' %}
+
 {% block title %}
     ingredient - {{ ingredient.ingredient_name }}
 {%  endblock %}
@@ -11,10 +13,14 @@
             <th>Ingredient Name:</th>
             <td>{{ ingredient.ingredient_name }}</td>
         </tr>
+        <tr>
+            <th>Is the ingredient vegetarian:</th>
+            <td>{{ is_vegetarian }}</td>
+        </tr>
+        <tr>
+            <th>What is its category:</th>
+            <td>{{ ingredient.category }}</td>
+        </tr>
     </table>
-</section>
-<section>
-    <h3>Is Vegetarian? {{ is_vegetarian }}</h3>
-    <h3>Category? {{ ingredient.category }}</h3
 </section>
 {% endblock %}

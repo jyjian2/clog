@@ -63,6 +63,16 @@ class Recipe_TypeList(View):
             {'recipe_type_list': Recipe_Type.objects.all()}
         )
 
+class Recipe_TypeDetail(View):
+    def get(self, request, pk):
+        recipe_type = get_object_or_404(Recipe_Type, pk=pk)
+        recipe_list = recipe_type.recipes.all()
+        return render(
+            request,
+            'recipeinfo/recipe_type_detail.html',
+            {'recipe_type': recipe_type, 'recipe_list': recipe_list}
+        )
+
 class BeverageList(View):
     def get(self, request):
         return render(
@@ -70,6 +80,18 @@ class BeverageList(View):
             'recipeinfo/beverage_list.html',
             {'beverage_list': Beverage.objects.all()}
         )
+
+class BeverageDetail(View):
+    def get(self, request, pk):
+        beverage = get_object_or_404(Beverage, pk=pk)
+        recipe_list = beverage.recipes.all()
+        return render(
+            request,
+            'recipeinfo/beverage_detail.html',
+            {'beverage': beverage, 'recipe_list': recipe_list}
+
+        )
+
 
 class RecipeList(View):
     def get(self, request):
@@ -81,13 +103,6 @@ class RecipeList(View):
         )
 
 
-class Recipe_IngredientList(View):
-    def get(self, request):
-        return render(
-            request,
-            'recipeinfo/recipe_ingredient_list.html',
-            {'recipe_ingredient_list': Recipe_Ingredient.objects.all()}
-        )
 
 class RecipeDetail(View):
     def get(self, request, pk):
@@ -100,10 +115,11 @@ class RecipeDetail(View):
             {'recipe': recipe, 'recipe_ingredient_list': recipe_ingredient_list}
         )
 
-class BeverageList(View):
+
+class Recipe_IngredientList(View):
     def get(self, request):
         return render(
             request,
-            'recipeinfo/beverage_list.html',
-            {'beverage_list': Beverage.objects.all()}
+            'recipeinfo/recipe_ingredient_list.html',
+            {'recipe_ingredient_list': Recipe_Ingredient.objects.all()}
         )
