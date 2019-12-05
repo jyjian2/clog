@@ -2,6 +2,7 @@ from django.urls import path
 
 from recipeinfo.views import (
     IngredientList,
+    IngredientDetail,
     RecipeDetail,
     CategoryList,
     CategoryDetail,
@@ -26,6 +27,10 @@ urlpatterns = [
     path('ingredients/',
          IngredientList.as_view(),
          name='recipeinfo_ingredient_list_urlpattern'),
+
+    path('ingredients/<int:pk>/',
+        IngredientDetail.as_view(),
+         name='recipeinfo_ingredient_detail_urlpattern'),
 
     path('recipe_types/',
          Recipe_TypeList.as_view(),

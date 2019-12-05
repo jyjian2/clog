@@ -39,6 +39,22 @@ class IngredientList(View):
             {'ingredient_list': Ingredient.objects.all()}
         )
 
+class IngredientDetail(View):
+    def get(self, request, pk):
+        ingredient = get_object_or_404(Ingredient, pk=pk)
+        if ingredient.is_vegetarian == 0:
+            is_vegetarian = 'NO'
+        else:
+            is_vegetarian = 'YES'
+
+        return render(
+            request,
+            'recipeinfo/ingredient_detail.html',
+            {'ingredient': ingredient, 'is_vegetarian': is_vegetarian}
+        )
+
+
+
 class Recipe_TypeList(View):
     def get(self, request):
         return render(
@@ -64,17 +80,6 @@ class RecipeList(View):
             {'recipe_list': recipe_list}
         )
 
-class IngredientDetail(View):
-    def get(self, request, pk):
-        ingredient = get_object_or_404(
-            Ingredient,
-            pk=pk
-        )
-        recipe_list = ingredient.get_recipes()
-        return render_to_response(
-            'recipeinfo/ingredient_detail.html',
-            {'ingredient': ingredient, 'recipe_list': recipe_list}
-        )
 
 class Recipe_IngredientList(View):
     def get(self, request):

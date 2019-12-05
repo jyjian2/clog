@@ -1,28 +1,20 @@
 {% block title %}
-    ingredient - {{ ingredient }}
+    ingredient - {{ ingredient.ingredient_name }}
 {%  endblock %}
 
 {% block content %}
-<h2>{{ ingredient }}</h2>
+<h2>{{ ingredient.ingredient_name }}</h2>
 
 <section>
     <table>
         <tr>
             <th>Ingredient Name:</th>
-            <td>{{ ingredient }}</td>
+            <td>{{ ingredient.ingredient_name }}</td>
         </tr>
     </table>
 </section>
 <section>
-    <h3>Recipes</h3>
-    <ul>
-        {% for recipe in recipe_list %}
-        <li>
-            <a href="">{{ recipe }}</a>
-        </li>
-        {% empty %}
-        <li><em>There are currently no recipes for this ingredient.</em></li>
-        {% endfor %}
-    </ul>
+    <h3>Is Vegetarian? {{ is_vegetarian }}</h3>
+    <h3>Category? {{ ingredient.category }}</h3
 </section>
 {% endblock %}
