@@ -7,7 +7,28 @@ from .models import(
     Recipe_Ingredient,
     Recipe,
     Beverage,
+    Category,
+    Recipe_Type,
 )
+
+class CategoryList(View):
+    def get(self, request):
+        return render(
+            request,
+            'recipeinfo/category_list.html',
+            {'category_list': Category.objects.all()}
+        )
+
+
+class CategoryDetail(View):
+    def get(self, request, pk):
+        category = get_object_or_404(Category, pk=pk)
+        ingredient_list = category.ingredients.all()
+        return render(
+            request,
+            'recipeinfo/category_detail.html',
+            {'category': category, 'ingredient_list': ingredient_list}
+        )
 
 
 class IngredientList(View):
@@ -16,6 +37,31 @@ class IngredientList(View):
             request,
             'recipeinfo/ingredient_list.html',
             {'ingredient_list': Ingredient.objects.all()}
+        )
+
+class Recipe_TypeList(View):
+    def get(self, request):
+        return render(
+            request,
+            'recipeinfo/recipe_type_list.html',
+            {'recipe_type_list': Recipe_Type.objects.all()}
+        )
+
+class BeverageList(View):
+    def get(self, request):
+        return render(
+            request,
+            'recipeinfo/beverage_list.html',
+            {'beverage_list': Beverage.objects.all()}
+        )
+
+class RecipeList(View):
+    def get(self, request):
+        recipe_list = Recipe.objects.all()
+        return render(
+            request,
+            'recipeinfo/recipe_list.html',
+            {'recipe_list': recipe_list}
         )
 
 class IngredientDetail(View):
@@ -36,15 +82,6 @@ class Recipe_IngredientList(View):
             request,
             'recipeinfo/recipe_ingredient_list.html',
             {'recipe_ingredient_list': Recipe_Ingredient.objects.all()}
-        )
-
-class RecipeList(View):
-    def get(self, request):
-        recipe_list = Recipe.objects.all()
-        return render(
-            request,
-            'recipeinfo/recipe_list.html',
-            {'recipe_list': recipe_list}
         )
 
 class RecipeDetail(View):

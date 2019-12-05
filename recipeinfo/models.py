@@ -65,21 +65,9 @@ class Recipe_Ingredient(models.Model):
     recipe_ingredient_id = models.AutoField(primary_key=True)
     ingredient = models.ForeignKey(Ingredient, related_name='recipe_ingredients', on_delete=models.PROTECT)
     recipe = models.ForeignKey(Recipe, related_name='recipe_ingredients', on_delete=models.PROTECT)
-
-    def __str__(self):
-        return '%s: %s' % ((self.recipe, self.ingredient))
-
-    class Meta:
-        ordering = ['recipe']
-
+    
 
 class Beverage_Ingredient(models.Model):
     beverage_ingredient_id = models.AutoField(primary_key=True)
     ingredient = models.ForeignKey(Ingredient, related_name='beverage_ingredients', on_delete=models.PROTECT)
     beverage = models.ForeignKey(Beverage, related_name='beverage_ingredients', on_delete=models.PROTECT)
-
-    def __str__(self):
-        return '%s: %s' % ((self.beverage, self.ingredient))
-
-    class Meta:
-        ordering = ['beverage']

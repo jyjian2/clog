@@ -1,20 +1,20 @@
 {% extends 'recipeinfo/base.html' %}
 
 {% block title %}
-    Recipe List
+    Cuisine Type
 {% endblock %}
 
 
 {% block content %}
-<h2>Recipe List</h2>
+<h2>Cuisine Type</h2>
 <ul>
-    {% for recipe in recipe_list %}
+    {% for recipe_type in recipe_type_list %}
         <li>
-        <a href="">{{ recipe }}</a>
+        <a href="">{{ recipe_type }}</a>
         </li>
     {% empty %}
 {#        empty is like the end of for loop. When ingredient_list is empty, stopped. #}
-        <li><em>There are currently no recipes in the list.</em></li>
+        <li><em>There are currently no cuisine type in the list.</em></li>
     {% endfor %}
 </ul>
 {% endblock %}

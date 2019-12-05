@@ -1,20 +1,20 @@
 {% extends 'recipeinfo/base.html' %}
 
 {% block title %}
-    Recipe List
+    Category List
 {% endblock %}
 
 
 {% block content %}
-<h2>Recipe List</h2>
+<h2>Category List</h2>
 <ul>
-    {% for recipe in recipe_list %}
+    {% for category in category_list %}
         <li>
-        <a href="">{{ recipe }}</a>
+        <a href="">{{ category }}</a>
         </li>
     {% empty %}
 {#        empty is like the end of for loop. When ingredient_list is empty, stopped. #}
-        <li><em>There are currently no recipes in the list.</em></li>
+        <li><em>There are currently no categories in the list.</em></li>
     {% endfor %}
 </ul>
 {% endblock %}
