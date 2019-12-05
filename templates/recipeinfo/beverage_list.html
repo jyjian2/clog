@@ -10,7 +10,7 @@
 <ul>
     {% for beverage in beverage_list %}
         <li>
-        <a href="">{{ beverage }}</a>
+        <a href="{{ beverage.get_absolute_url }}">{{ beverage }}</a>
         </li>
     {% empty %}
 {#        empty is like the end of for loop. When ingredient_list is empty, stopped. #}

@@ -18,9 +18,10 @@ from recipeinfo.views import (
 
 urlpatterns = [
 
+
     path('categories/',
          CategoryList.as_view(),
-         name='recipeinfo_category_urlpattern'),
+         name='recipeinfo_category_list_urlpattern'),
 
     path('categories/<int:pk>/',
         CategoryDetail.as_view(),

@@ -10,7 +10,7 @@
 <ul>
     {% for recipe in recipe_list %}
         <li>
-        <a href="">{{ recipe }}</a>
+        <a href="{{ recipe.get_absolute_url }}">{{ recipe }}</a>
         </li>
     {% empty %}
 {#        empty is like the end of for loop. When ingredient_list is empty, stopped. #}

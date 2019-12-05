@@ -4,7 +4,6 @@ from django.shortcuts import render, get_object_or_404, render_to_response, redi
 
 from .models import(
     Ingredient,
-    Recipe_Ingredient,
     Recipe,
     Beverage,
     Category,
@@ -115,11 +114,3 @@ class RecipeDetail(View):
             {'recipe': recipe, 'recipe_ingredient_list': recipe_ingredient_list}
         )
 
-
-class Recipe_IngredientList(View):
-    def get(self, request):
-        return render(
-            request,
-            'recipeinfo/recipe_ingredient_list.html',
-            {'recipe_ingredient_list': Recipe_Ingredient.objects.all()}
-        )
