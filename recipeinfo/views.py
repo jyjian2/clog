@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 
 from .models import(
     Ingredient,
@@ -39,10 +40,22 @@ class Recipe_IngredientList(View):
 
 class RecipeList(View):
     def get(self, request):
+        recipe_list = Recipe.objects.all()
         return render(
             request,
             'recipeinfo/recipe_list.html',
-            {'recipe_list': Recipe.objects.all()}
+            {'recipe_list': recipe_list}
+        )
+
+class RecipeDetail(View):
+    def get(self, request, pk):
+        recipe = get_object_or_404(Recipe, pk=pk)
+        # recipe_ingredients is a related name of Recipe_Ingredients defined in model.py
+        recipe_ingredient_list = recipe.recipe_ingredients.all()
+        return render(
+            request,
+            'recipeinfo/recipe_detail.html',
+            {'recipe': recipe, 'recipe_ingredient_list': recipe_ingredient_list}
         )
 
 class BeverageList(View):

@@ -1,0 +1,23 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Recipe - {{ recipe }}
+{%  endblock %}
+
+{% block content %}
+<h2>{{ recipe }}</h2>
+
+
+<section>
+    <h3>Ingredients</h3>
+    <ul>
+        {% for ri in recipe_ingredient_list %}
+        <li>
+            <a href="">{{ ri.ingredient }}</a>
+        </li>
+        {% empty %}
+        <li><em>There are currently no ingredients for this recipe.</em></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
