@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views import View
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 
+from recipeinfo.forms import CategoryForm
+from recipeinfo.utils import ObjectCreateMixin
 from .models import(
     Ingredient,
     Recipe,
@@ -28,6 +30,10 @@ class CategoryDetail(View):
             'recipeinfo/category_detail.html',
             {'category': category, 'ingredient_list': ingredient_list}
         )
+
+class CategoryCreate(ObjectCreateMixin, View):
+    form_class = CategoryForm
+    template_name = 'recipeinfo/category_form.html'
 
 
 class IngredientList(View):

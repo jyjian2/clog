@@ -13,7 +13,7 @@
     <ul>
         {% for ri in recipe_ingredient_list %}
         <li>
-            <a href="">{{ ri.ingredient }}</a>
+            <a href="{{ ri.ingredient.get_absolute_url }}">{{ ri.ingredient }}</a>
         </li>
         {% empty %}
         <li><em>There are currently no ingredients for this recipe.</em></li>
