@@ -6,6 +6,9 @@
 
 {% block content %}
 <h2>{{ recipe_type.recipe_type_name }}</h2>
+    <ul>
+    <li><a href="{{ recipe_type.get_update_url }}">Edit Recipe Type</a> </li>
+    </ul>
 
 <section>
     <h3>Recipes belong to this recipe type:</h3>

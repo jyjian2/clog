@@ -30,6 +30,9 @@ class Ingredient(models.Model):
     def get_absolute_url(self):
         return reverse('recipeinfo_ingredient_detail_urlpattern', kwargs={'pk': self.pk})
 
+    def get_update_url(self):
+        return reverse('recipeinfo_ingredient_update_urlpattern', kwargs={'pk': self.pk})
+
     class Meta:
         ordering = ['ingredient_name']
 
@@ -43,6 +46,9 @@ class Recipe_Type(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipeinfo_recipe_type_detail_urlpattern', kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('recipeinfo_recipe_type_update_urlpattern', kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['recipe_type_name']
@@ -59,6 +65,9 @@ class Beverage(models.Model):
     def get_absolute_url(self):
         return reverse('recipeinfo_beverage_detail_urlpattern', kwargs={'pk': self.pk})
 
+    def get_update_url(self):
+        return reverse('recipeinfo_beverage_update_urlpattern', kwargs={'pk': self.pk})
+
     class Meta:
         ordering = ['beverage_name']
 
@@ -74,6 +83,9 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipeinfo_recipe_detail_urlpattern', kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('recipeinfo_recipe_update_urlpattern', kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['recipe_name']

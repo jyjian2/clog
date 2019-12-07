@@ -6,6 +6,9 @@
 
 {% block content %}
 <h2>{{ recipe }}</h2>
+    <ul>
+    <li><a href="{{ recipe.get_update_url }}">Edit Recipe</a> </li>
+    </ul>
 
 
 <section>

@@ -84,6 +84,29 @@ class IngredientCreate(ObjectCreateMixin, View):
     form_class = IngredientForm
     template_name = 'recipeinfo/ingredient_form.html'
 
+class IngredientUpdate(View):
+    form_class = IngredientForm
+    model = Ingredient
+    template_name = 'recipeinfo/ingredient_form_update.html'
+
+    def get_object(self, pk):
+        return get_object_or_404(self.model, pk=pk)
+
+    def get(self, request, pk):
+        ingredient = self.get_object(pk)
+        context = {'form': self.form_class(instance=ingredient), 'ingredient': ingredient}
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        ingredient = self.get_object(pk)
+        bound_form = self.form_class(request.POST, instance=ingredient)
+        if bound_form.is_valid():
+            new_ingredient = bound_form.save()
+            return redirect(new_ingredient)
+        else:
+            context = {'form': bound_form, 'ingredient': ingredient}
+            return render(request, self.template_name, context)
+
 class Recipe_TypeList(View):
     def get(self, request):
         return render(
@@ -105,6 +128,30 @@ class Recipe_TypeDetail(View):
 class Recipe_TypeCreate(ObjectCreateMixin, View):
     form_class = Recipe_TypeForm
     template_name = 'recipeinfo/recipe_type_form.html'
+
+
+class Recipe_TypeUpdate(View):
+    form_class = Recipe_TypeForm
+    model = Recipe_Type
+    template_name = 'recipeinfo/Recipe_Type_form_update.html'
+
+    def get_object(self, pk):
+        return get_object_or_404(self.model, pk=pk)
+
+    def get(self, request, pk):
+        Recipe_Type = self.get_object(pk)
+        context = {'form': self.form_class(instance=Recipe_Type), 'Recipe_Type': Recipe_Type}
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        Recipe_Type = self.get_object(pk)
+        bound_form = self.form_class(request.POST, instance=Recipe_Type)
+        if bound_form.is_valid():
+            new_Recipe_Type = bound_form.save()
+            return redirect(new_Recipe_Type)
+        else:
+            context = {'form': bound_form, 'Recipe_Type': Recipe_Type}
+            return render(request, self.template_name, context)
 
 
 class BeverageList(View):
@@ -132,6 +179,31 @@ class BeverageCreate(ObjectCreateMixin, View):
     template_name = 'recipeinfo/beverage_form.html'
 
 
+class BeverageUpdate(View):
+    form_class = BeverageForm
+    model = Beverage
+    template_name = 'recipeinfo/beverage_form_update.html'
+
+    def get_object(self, pk):
+        return get_object_or_404(self.model, pk=pk)
+
+    def get(self, request, pk):
+        beverage = self.get_object(pk)
+        context = {'form': self.form_class(instance=beverage), 'beverage': beverage}
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        beverage = self.get_object(pk)
+        bound_form = self.form_class(request.POST, instance=beverage)
+        if bound_form.is_valid():
+            new_beverage = bound_form.save()
+            return redirect(new_beverage)
+        else:
+            context = {'form': bound_form, 'beverage': beverage}
+            return render(request, self.template_name, context)
+
+
+
 class RecipeList(View):
     def get(self, request):
         recipe_list = Recipe.objects.all()
@@ -157,3 +229,27 @@ class RecipeDetail(View):
 class RecipeCreate(ObjectCreateMixin, View):
     form_class = RecipeForm
     template_name = 'recipeinfo/recipe_form.html'
+
+
+class RecipeUpdate(View):
+    form_class = RecipeForm
+    model = Recipe
+    template_name = 'recipeinfo/recipe_form_update.html'
+
+    def get_object(self, pk):
+        return get_object_or_404(self.model, pk=pk)
+
+    def get(self, request, pk):
+        recipe = self.get_object(pk)
+        context = {'form': self.form_class(instance=recipe), 'recipe': recipe}
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        recipe = self.get_object(pk)
+        bound_form = self.form_class(request.POST, instance=recipe)
+        if bound_form.is_valid():
+            new_recipe = bound_form.save()
+            return redirect(new_recipe)
+        else:
+            context = {'form': bound_form, 'recipe': recipe}
+            return render(request, self.template_name, context)

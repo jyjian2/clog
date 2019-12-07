@@ -6,6 +6,9 @@
 
 {% block content %}
 <h2>{{ beverage }}</h2>
+    <ul>
+    <li><a href="{{ beverage.get_update_url }}">Edit Beverage</a> </li>
+    </ul>
 
 <section>
     <h3>Recipes</h3>

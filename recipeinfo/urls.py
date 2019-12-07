@@ -8,15 +8,19 @@ from recipeinfo.views import (
     IngredientList,
     IngredientDetail,
     IngredientCreate,
+    IngredientUpdate,
     Recipe_TypeList,
     Recipe_TypeDetail,
     Recipe_TypeCreate,
+    Recipe_TypeUpdate,
     BeverageList,
     BeverageDetail,
     BeverageCreate,
+    BeverageUpdate,
     RecipeList,
     RecipeDetail,
     RecipeCreate,
+    RecipeUpdate,
     )
 
 
@@ -37,7 +41,7 @@ urlpatterns = [
         CategoryCreate.as_view(),
         name='recipeinfo_category_create_urlpattern'),
 
-    path('categories/<int:pk>/',
+    path('categories/<int:pk>/update/',
         CategoryUpdate.as_view(),
          name='recipeinfo_category_update_urlpattern'),
 
@@ -53,6 +57,10 @@ urlpatterns = [
         IngredientCreate.as_view(),
         name='recipeinfo_ingredient_create_urlpattern'),
 
+    path('ingredients/<int:pk>/update/',
+         IngredientUpdate.as_view(),
+         name='recipeinfo_ingredient_update_urlpattern'),
+
     path('recipe_types/',
          Recipe_TypeList.as_view(),
          name='recipeinfo_recipe_type_list_urlpattern'),
@@ -64,6 +72,10 @@ urlpatterns = [
     path('recipe_types/create/',
         Recipe_TypeCreate.as_view(),
         name='recipeinfo_recipe_type_create_urlpattern'),
+
+    path('recipe_types/<int:pk>/update/',
+         Recipe_TypeUpdate.as_view(),
+         name='recipeinfo_recipe_type_update_urlpattern'),
 
     path('beverages/',
          BeverageList.as_view(),
@@ -77,6 +89,10 @@ urlpatterns = [
         BeverageCreate.as_view(),
         name='recipeinfo_beverage_create_urlpattern'),
 
+    path('beverages/<int:pk>/update/',
+         BeverageUpdate.as_view(),
+         name='recipeinfo_beverage_update_urlpattern'),
+
     path('recipes/',
          RecipeList.as_view(),
          name='recipeinfo_recipe_list_urlpattern'),
@@ -89,5 +105,9 @@ urlpatterns = [
     path('recipes/create/',
          RecipeCreate.as_view(),
          name='recipeinfo_recipe_create_urlpattern'),
+
+    path('recipes/<int:pk>/update/',
+         RecipeUpdate.as_view(),
+         name='recipeinfo_recipe_update_urlpattern'),
 ]
 
