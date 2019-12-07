@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 
-from recipeinfo.forms import CategoryForm
+from recipeinfo.forms import CategoryForm, IngredientForm, Recipe_TypeForm, BeverageForm, RecipeForm
 from recipeinfo.utils import ObjectCreateMixin
 from .models import(
     Ingredient,
@@ -35,6 +35,28 @@ class CategoryCreate(ObjectCreateMixin, View):
     form_class = CategoryForm
     template_name = 'recipeinfo/category_form.html'
 
+class CategoryUpdate(View):
+    form_class = CategoryForm
+    model = Category
+    template_name = 'recipeinfo/category_form_update.html'
+
+    def get_object(self, pk):
+        return get_object_or_404(self.model, pk=pk)
+
+    def get(self, request, pk):
+        category = self.get_object(pk)
+        context = {'form': self.form_class(instance=category), 'category': category}
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        category = self.get_object(pk)
+        bound_form = self.form_class(request.POST, instance=category)
+        if bound_form.is_valid():
+            new_category = bound_form.save()
+            return redirect(new_category)
+        else:
+            context = {'form': bound_form, 'category': category}
+            return render(request, self.template_name, context)
 
 class IngredientList(View):
     def get(self, request):
@@ -58,7 +80,9 @@ class IngredientDetail(View):
             {'ingredient': ingredient, 'is_vegetarian': is_vegetarian}
         )
 
-
+class IngredientCreate(ObjectCreateMixin, View):
+    form_class = IngredientForm
+    template_name = 'recipeinfo/ingredient_form.html'
 
 class Recipe_TypeList(View):
     def get(self, request):
@@ -77,6 +101,11 @@ class Recipe_TypeDetail(View):
             'recipeinfo/recipe_type_detail.html',
             {'recipe_type': recipe_type, 'recipe_list': recipe_list}
         )
+
+class Recipe_TypeCreate(ObjectCreateMixin, View):
+    form_class = Recipe_TypeForm
+    template_name = 'recipeinfo/recipe_type_form.html'
+
 
 class BeverageList(View):
     def get(self, request):
@@ -98,6 +127,11 @@ class BeverageDetail(View):
         )
 
 
+class BeverageCreate(ObjectCreateMixin, View):
+    form_class = BeverageForm
+    template_name = 'recipeinfo/beverage_form.html'
+
+
 class RecipeList(View):
     def get(self, request):
         recipe_list = Recipe.objects.all()
@@ -106,7 +140,6 @@ class RecipeList(View):
             'recipeinfo/recipe_list.html',
             {'recipe_list': recipe_list}
         )
-
 
 
 class RecipeDetail(View):
@@ -120,3 +153,7 @@ class RecipeDetail(View):
             {'recipe': recipe, 'recipe_ingredient_list': recipe_ingredient_list}
         )
 
+
+class RecipeCreate(ObjectCreateMixin, View):
+    form_class = RecipeForm
+    template_name = 'recipeinfo/recipe_form.html'

@@ -7,6 +7,9 @@
 
 {% block content %}
 <h2>Cuisine Type</h2>
+    <div>
+         <a href="{% url 'recipeinfo_recipe_type_create_urlpattern' %}">Create New Recipe Type</a>
+    </div>
 <ul>
     {% for recipe_type in recipe_type_list %}
         <li>

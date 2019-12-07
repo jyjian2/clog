@@ -7,6 +7,9 @@
 
 {% block content %}
 <h2>Ingredient Category List</h2>
+    <div>
+         <a href="{% url 'recipeinfo_category_create_urlpattern' %}">Create New Category</a>
+    </div>
 <ul>
     {% for category in category_list %}
         <li>

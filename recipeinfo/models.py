@@ -12,6 +12,9 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('recipeinfo_category_detail_urlpattern',kwargs={'pk': self.pk})
 
+    def get_update_url(self):
+        return reverse('recipeinfo_category_update_urlpattern',kwargs={'pk': self.pk})
+
     class Meta:
         ordering = ['category_name']
 

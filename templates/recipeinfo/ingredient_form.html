@@ -1,0 +1,15 @@
+{%  extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Create Ingredient
+{% endblock %}
+
+{% block content %}
+    <form
+        action="{% url 'recipeinfo_ingredient_create_urlpattern' %}"
+        method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Ingredient</button>
+    </form>
+{% endblock %}

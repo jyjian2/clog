@@ -1,0 +1,15 @@
+{%  extends 'recipeinfo/base.html' %}
+
+{% block title %}
+Update Category
+{% endblock %}
+
+{% block content %}
+    <form
+        action="{{ category.get_update_url }}"
+        method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Recipe Category</button>
+    </form>
+{% endblock %}
