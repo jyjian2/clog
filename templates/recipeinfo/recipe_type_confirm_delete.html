@@ -1,0 +1,19 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Delete Recipe Type
+{% endblock %}
+
+{% block content %}
+    <form
+        action="{{ recipe_type.get_delete_url }}"
+        method="post">
+        {% csrf_token %}
+        <p>
+            Are you sure that you want to delete
+            recipe type {{ recipe_type }}?
+        </p>
+        <a href="{{ recipe_type.get_absolute_url }}">Cancel</a>
+        <button type="submit">Delete Recipe Type</button>
+    </form>
+{% endblock %}

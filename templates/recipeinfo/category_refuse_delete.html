@@ -1,0 +1,27 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Error Deleting Category
+{%  endblock %}
+
+{% block content %}
+    <div>
+        <h2>Error Deleting Category</h2>
+        <p>
+            You may not delete {{ category }}. This
+            category is currently assigned to the following
+            ingredients:
+        </p>
+
+        <ul>
+            {% for ingredient in ingredients %}
+            <li><a href="{{ ingredient.get_absolute_url }}">{{ ingredient }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <p>
+            Return to <a href="{%  url 'recipeinfo_ingredient_list_urlpattern' %}">Ingredient List</a>.
+        </p>
+
+    </div>
+{% endblock %}

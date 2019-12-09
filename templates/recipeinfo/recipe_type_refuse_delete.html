@@ -1,0 +1,27 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Error Deleting Recipe Type
+{%  endblock %}
+
+{% block content %}
+    <div>
+        <h2>Error Deleting Recipe Type</h2>
+        <p>
+            You may not delete {{ recipe_type }}. This
+            recipe type is currently assigned to the following
+            recipes:
+        </p>
+
+        <ul>
+            {% for r in recipes %}
+            <li><a href="{{ r.get_absolute_url }}">{{ r }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <p>
+            Return to <a href="{%  url 'recipeinfo_recipe_list_urlpattern' %}">Recipe List</a>.
+        </p>
+
+    </div>
+{% endblock %}

@@ -15,6 +15,9 @@ class Category(models.Model):
     def get_update_url(self):
         return reverse('recipeinfo_category_update_urlpattern',kwargs={'pk': self.pk})
 
+    def get_delete_url(self):
+        return reverse('recipeinfo_category_delete_urlpattern',kwargs={'pk': self.pk})
+
     class Meta:
         ordering = ['category_name']
 
@@ -33,6 +36,9 @@ class Ingredient(models.Model):
     def get_update_url(self):
         return reverse('recipeinfo_ingredient_update_urlpattern', kwargs={'pk': self.pk})
 
+    def get_delete_url(self):
+        return reverse('recipeinfo_ingredient_delete_urlpattern',kwargs={'pk': self.pk})
+
     class Meta:
         ordering = ['ingredient_name']
 
@@ -49,6 +55,9 @@ class Recipe_Type(models.Model):
 
     def get_update_url(self):
         return reverse('recipeinfo_recipe_type_update_urlpattern', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('recipeinfo_recipe_type_delete_urlpattern',kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['recipe_type_name']
@@ -68,6 +77,9 @@ class Beverage(models.Model):
     def get_update_url(self):
         return reverse('recipeinfo_beverage_update_urlpattern', kwargs={'pk': self.pk})
 
+    def get_delete_url(self):
+        return reverse('recipeinfo_beverage_delete_urlpattern',kwargs={'pk': self.pk})
+
     class Meta:
         ordering = ['beverage_name']
 
@@ -86,6 +98,9 @@ class Recipe(models.Model):
 
     def get_update_url(self):
         return reverse('recipeinfo_recipe_update_urlpattern', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('recipeinfo_recipe_delete_urlpattern',kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ['recipe_name']

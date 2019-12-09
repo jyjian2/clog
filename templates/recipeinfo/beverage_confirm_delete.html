@@ -1,0 +1,19 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Delete Beverage
+{% endblock %}
+
+{% block content %}
+    <form
+        action="{{ beveragee.get_delete_url }}"
+        method="post">
+        {% csrf_token %}
+        <p>
+            Are you sure that you want to delete
+            beverage {{ beverage }}?
+        </p>
+        <a href="{{ beverage.get_absolute_url }}">Cancel</a>
+        <button type="submit">Delete Beverage</button>
+    </form>
+{% endblock %}

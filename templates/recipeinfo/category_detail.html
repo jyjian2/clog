@@ -7,7 +7,8 @@
 {% block content %}
     <h2>{{ category }}</h2>
     <ul>
-    <li><a href="{{ category.get_update_url }}">Edit Recipe Category</a> </li>
+        <li><a href="{{ category.get_update_url }}">Edit Recipe Category</a> </li>
+        <li><a href="{{ category.get_delete_url }}">Delete Recipe Category</a></li>
     </ul>
 
     <section>

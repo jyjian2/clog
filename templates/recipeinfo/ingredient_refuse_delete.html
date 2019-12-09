@@ -1,0 +1,30 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Error Deleting Ingredient
+{%  endblock %}
+
+{% block content %}
+    <div>
+        <h2>Error Deleting Ingredient</h2>
+        <p>
+            You may not delete {{ ingredients }}. This
+            ingredient is currently assigned to the following
+            items:
+        </p>
+
+        <ul>
+            {% for ri in recipe_ingredients %}
+            <li><a href="{{ ri.recipe.get_absolute_url }}">{{ ri.recipe }}</a></li>
+            {% endfor %}
+            {% for bi in beverage_ingredients %}
+            <li><a href="{{ bi.beverage.get_absolute_url }}">{{ bi.bevergae }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <p>
+            Return to <a href="{%  url 'recipeinfo_ingredient_list_urlpattern' %}">Ingredient List</a>.
+        </p>
+
+    </div>
+{% endblock %}

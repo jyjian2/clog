@@ -1,0 +1,27 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Error Deleting Beverage
+{%  endblock %}
+
+{% block content %}
+    <div>
+        <h2>Error Deleting Beverage</h2>
+        <p>
+            You may not delete {{ beverage }}. This
+            beverage is currently assigned to the following
+            recipes:
+        </p>
+
+        <ul>
+            {% for b in recipes %}
+            <li><a href="{{ b.get_absolute_url }}">{{ b }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <p>
+            Return to <a href="{%  url 'recipeinfo_beverage_list_urlpattern' %}">Beverage List</a>.
+        </p>
+
+    </div>
+{% endblock %}
