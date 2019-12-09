@@ -6,18 +6,37 @@
 
 
 {% block content %}
-<h2>Ingredient Category List</h2>
+<h2>Category List</h2>
     <div>
          <a href="{% url 'recipeinfo_category_create_urlpattern' %}">Create New Category</a>
     </div>
-<ul>
-    {% for category in category_list %}
+    <ul>
+        {% for category in category_list %}
+            <li>
+            <a href="{{ category.get_absolute_url }}">{{ category }}</a>
+            </li>
+        {% empty %}
+    {#        empty is like the end of for loop. When ingredient_list is empty, stopped. #}
+            <li><em>There are currently no categories in the list.</em></li>
+        {% endfor %}
+    </ul>
+        {% if is_paginated %}
+    <ul>
+        {% if previous_page_url %}
+            <li>
+            <a href="{{ previous_page_url }}">Previous</a>
+            </li>
+    {% endif %}
         <li>
-        <a href="{{ category.get_absolute_url }}">{{ category }}</a>
+            Page{{ category_list.number }}
+            of {{ paginator.num_pages }}
         </li>
-    {% empty %}
-{#        empty is like the end of for loop. When ingredient_list is empty, stopped. #}
-        <li><em>There are currently no categories in the list.</em></li>
-    {% endfor %}
-</ul>
+    {% if next_page_url %}
+        <li>
+            <a href="{{ next_page_url }}">Next</a>
+        </li>
+    {% endif %}
+    </ul>
+        {% endif %}
+
 {% endblock %}

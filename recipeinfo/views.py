@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from django.views import View
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
+from django.views import View
 
 from recipeinfo.forms import CategoryForm, IngredientForm, Recipe_TypeForm, BeverageForm, RecipeForm
 from recipeinfo.utils import ObjectCreateMixin
@@ -13,13 +13,48 @@ from .models import(
 )
 
 class CategoryList(View):
-    def get(self, request):
-        return render(
-            request,
-            'recipeinfo/category_list.html',
-            {'category_list': Category.objects.all()}
-        )
+    page_kwarg = 'page'
+    paginate_by = 6;
+    template_name = 'recipeinfo/category_list.html'
 
+    def get(self, request):
+        categories = Category.objects.all()
+        paginator = Paginator(
+            categories,
+            self.paginate_by
+        )
+        page_number = request.GET.get(
+            self.page_kwarg
+        )
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(
+                paginator.num_pages)
+        if page.has_previous():
+            prev_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.previous_page_number())
+        else:
+            prev_url = None
+        if page.has_next():
+            next_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.next_page_number())
+        else:
+            next_url = None
+        context = {
+            'is_paginated':
+                page.has_other_pages(),
+            'next_page_url': next_url,
+            'paginator': paginator,
+            'previous_page_url': prev_url,
+            'category_list': page,
+        }
+        return render(
+            request, self.template_name, context)
 
 class CategoryDetail(View):
     def get(self, request, pk):
@@ -78,12 +113,48 @@ class CategoryDelete(View):
 
 
 class IngredientList(View):
+    page_kwarg = 'page'
+    paginate_by = 10;
+    template_name = 'recipeinfo/ingredient_list.html'
+
     def get(self, request):
-        return render(
-            request,
-            'recipeinfo/ingredient_list.html',
-            {'ingredient_list': Ingredient.objects.all()}
+        ingredients = Ingredient.objects.all()
+        paginator = Paginator(
+            ingredients,
+            self.paginate_by
         )
+        page_number = request.GET.get(
+            self.page_kwarg
+        )
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(
+                paginator.num_pages)
+        if page.has_previous():
+            prev_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.previous_page_number())
+        else:
+            prev_url = None
+        if page.has_next():
+            next_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.next_page_number())
+        else:
+            next_url = None
+        context = {
+            'is_paginated':
+                page.has_other_pages(),
+            'next_page_url': next_url,
+            'paginator': paginator,
+            'previous_page_url': prev_url,
+            'ingredient_list': page,
+        }
+        return render(
+            request, self.template_name, context)
 
 class IngredientDetail(View):
     def get(self, request, pk):
@@ -147,13 +218,51 @@ class IngredientDelete(View):
         return redirect('recipeinfo_ingredient_list_urlpattern')
 
 
+
 class Recipe_TypeList(View):
+    page_kwarg = 'page'
+    paginate_by = 10;
+    template_name = 'recipeinfo/recipe_type_list.html'
+
     def get(self, request):
-        return render(
-            request,
-            'recipeinfo/recipe_type_list.html',
-            {'recipe_type_list': Recipe_Type.objects.all()}
+        recipe_types = Recipe_Type.objects.all()
+        paginator = Paginator(
+            recipe_types,
+            self.paginate_by
         )
+        page_number = request.GET.get(
+            self.page_kwarg
+        )
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(
+                paginator.num_pages)
+        if page.has_previous():
+            prev_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.previous_page_number())
+        else:
+            prev_url = None
+        if page.has_next():
+            next_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.next_page_number())
+        else:
+            next_url = None
+        context = {
+            'is_paginated':
+                page.has_other_pages(),
+            'next_page_url': next_url,
+            'paginator': paginator,
+            'previous_page_url': prev_url,
+            'recipe_type_list': page,
+        }
+        return render(
+            request, self.template_name, context)
+
 
 
 class Recipe_TypeDetail(View):
@@ -216,13 +325,52 @@ class Recipe_TypeDelete(View):
 
 
 
+
 class BeverageList(View):
+    page_kwarg = 'page'
+    paginate_by = 10;
+    template_name = 'recipeinfo/beverage_list.html'
+
     def get(self, request):
-        return render(
-            request,
-            'recipeinfo/beverage_list.html',
-            {'beverage_list': Beverage.objects.all()}
+        beverages = Beverage.objects.all()
+        paginator = Paginator(
+            beverages,
+            self.paginate_by
         )
+        page_number = request.GET.get(
+            self.page_kwarg
+        )
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(
+                paginator.num_pages)
+        if page.has_previous():
+            prev_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.previous_page_number())
+        else:
+            prev_url = None
+        if page.has_next():
+            next_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.next_page_number())
+        else:
+            next_url = None
+        context = {
+            'is_paginated':
+                page.has_other_pages(),
+            'next_page_url': next_url,
+            'paginator': paginator,
+            'previous_page_url': prev_url,
+            'beverage_list': page,
+        }
+        return render(
+            request, self.template_name, context)
+
+
 
 class BeverageDetail(View):
     def get(self, request, pk):
@@ -286,14 +434,51 @@ class BeverageDelete(View):
 
 
 
+
 class RecipeList(View):
+    page_kwarg = 'page'
+    paginate_by = 10;
+    template_name = 'recipeinfo/recipe_list.html'
+
     def get(self, request):
-        recipe_list = Recipe.objects.all()
-        return render(
-            request,
-            'recipeinfo/recipe_list.html',
-            {'recipe_list': recipe_list}
+        recipes = Recipe.objects.all()
+        paginator = Paginator(
+            recipes,
+            self.paginate_by
         )
+        page_number = request.GET.get(
+            self.page_kwarg
+        )
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(
+                paginator.num_pages)
+        if page.has_previous():
+            prev_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.previous_page_number())
+        else:
+            prev_url = None
+        if page.has_next():
+            next_url = "?{pkw}={n}".format(
+                pkw = self.page_kwarg,
+                n = page.next_page_number())
+        else:
+            next_url = None
+        context = {
+            'is_paginated':
+                page.has_other_pages(),
+            'next_page_url': next_url,
+            'paginator': paginator,
+            'previous_page_url': prev_url,
+            'recipe_list': page,
+        }
+        return render(
+            request, self.template_name, context)
+
 
 
 class RecipeDetail(View):
