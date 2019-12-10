@@ -7,8 +7,10 @@
 {% block content %}
 <h2>{{ recipe_type.recipe_type_name }}</h2>
     <ul>
-    <li><a href="{{ recipe_type.get_update_url }}">Edit Recipe Type</a> </li>
-    <li><a href="{{ recipe_type.get_delete_url }}">Delete Recipe Type</a></li>
+    <li><a href="{{ recipe_type.get_update_url }}"
+    class="button">Edit Recipe Type</a> </li>
+    <li><a href="{{ recipe_type.get_delete_url }}"
+    class="button">Delete Recipe Type</a></li>
     </ul>
 
 <section>

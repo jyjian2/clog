@@ -8,7 +8,8 @@
 {% block content %}
 <h2>Beverage List</h2>
     <div>
-         <a href="{% url 'recipeinfo_beverage_create_urlpattern' %}">Create New Beverage</a>
+         <a href="{% url 'recipeinfo_beverage_create_urlpattern' %}"
+         class="button button-primary">Create New Beverage</a>
     </div>
 <ul>
     {% for beverage in beverage_list %}

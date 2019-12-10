@@ -7,8 +7,10 @@
 {% block content %}
 <h2>{{ beverage }}</h2>
     <ul>
-    <li><a href="{{ beverage.get_update_url }}">Edit Beverage</a> </li>
-    <li><a href="{{ beverage.get_delete_url }}">Delete Beverage</a></li>
+    <li><a href="{{ beverage.get_update_url }}"
+        class="button">Edit Beverage</a> </li>
+    <li><a href="{{ beverage.get_delete_url }}"
+        class="button">Delete Beverage</a></li>
     </ul>
 
 <section>

@@ -8,7 +8,8 @@
 {% block content %}
 <h2>Recipe List</h2>
     <div>
-         <a href="{% url 'recipeinfo_recipe_create_urlpattern' %}">Create New Recipe</a>
+         <a href="{% url 'recipeinfo_recipe_create_urlpattern' %}"
+         class="button button-primary">Create New Recipe</a>
     </div>
 <ul>
     {% for recipe in recipe_list %}

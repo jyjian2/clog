@@ -5,7 +5,7 @@ from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 
 from recipeinfo.forms import CategoryForm, IngredientForm, Recipe_TypeForm, BeverageForm, RecipeForm
-from recipeinfo.utils import ObjectCreateMixin, PageLinksMixin
+from recipeinfo.utils import PageLinksMixin
 from .models import(
     Ingredient,
     Recipe,
@@ -14,9 +14,13 @@ from .models import(
     Recipe_Type,
 )
 
-class CategoryList(PageLinksMixin, ListView):
-    paginate_by = 5
+class CategoryList(ListView):
     model = Category
+
+
+# class CategoryList(PageLinksMixin, ListView):
+#     paginate_by = 5
+#     model = Category
 
 # class CategoryList(View):
 #     page_kwarg = 'page'
@@ -72,54 +76,78 @@ class CategoryDetail(View):
             {'category': category, 'ingredient_list': ingredient_list}
         )
 
-class CategoryCreate(ObjectCreateMixin, View):
-    form_class = CategoryForm
-    template_name = 'recipeinfo/category_form.html'
 
-class CategoryUpdate(View):
+class CategoryCreate(CreateView):
+    form_class = CategoryForm
+    model = Category
+
+
+# class CategoryCreate(ObjectCreateMixin, View):
+#     form_class = CategoryForm
+#     template_name = 'recipeinfo/category_form.html'
+
+
+class CategoryUpdate(UpdateView):
     form_class = CategoryForm
     model = Category
     template_name = 'recipeinfo/category_form_update.html'
 
-    def get_object(self, pk):
-        return get_object_or_404(self.model, pk=pk)
 
-    def get(self, request, pk):
-        category = self.get_object(pk)
-        context = {'form': self.form_class(instance=category), 'category': category}
-        return render(request, self.template_name, context)
-
-    def post(self, request, pk):
-        category = self.get_object(pk)
-        bound_form = self.form_class(request.POST, instance=category)
-        if bound_form.is_valid():
-            new_category = bound_form.save()
-            return redirect(new_category)
-        else:
-            context = {'form': bound_form, 'category': category}
-            return render(request, self.template_name, context)
-
-
-class CategoryDelete(View):
-    def get(self, request, pk):
-        category = self.get_object(pk)
-        ingredients = category.ingredients.all()
-        if ingredients.count() > 0:
-            return render(request, 'recipeinfo/category_refuse_delete.html', {'category': category, 'ingredients': ingredients})
-        else:
-            return render(request, 'recipeinfo/category_confirm_delete.html', {'category': category})
-
-    def get_object(self, pk):
-        return get_object_or_404(Category, pk=pk)
-    def post(self, request, pk):
-        category = self.get_object(pk)
-        category.delete()
-        return redirect('recipeinfo_category_list_urlpattern')
+# class CategoryUpdate(View):
+#     form_class = CategoryForm
+#     model = Category
+#     template_name = 'recipeinfo/category_form_update.html'
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(self.model, pk=pk)
+#
+#     def get(self, request, pk):
+#         category = self.get_object(pk)
+#         context = {'form': self.form_class(instance=category), 'category': category}
+#         return render(request, self.template_name, context)
+#
+#     def post(self, request, pk):
+#         category = self.get_object(pk)
+#         bound_form = self.form_class(request.POST, instance=category)
+#         if bound_form.is_valid():
+#             new_category = bound_form.save()
+#             return redirect(new_category)
+#         else:
+#             context = {'form': bound_form, 'category': category}
+#             return render(request, self.template_name, context)
 
 
-class IngredientList(PageLinksMixin, ListView):
-    paginate_by = 10
+
+class CategoryDelete(DeleteView):
+    model = Category
+    success_url = reverse_lazy('recipeinfo_category_list_urlpattern')
+
+
+# class CategoryDelete(View):
+#     def get(self, request, pk):
+#         category = self.get_object(pk)
+#         ingredients = category.ingredients.all()
+#         if ingredients.count() > 0:
+#             return render(request, 'recipeinfo/category_refuse_delete.html', {'category': category, 'ingredients': ingredients})
+#         else:
+#             return render(request, 'recipeinfo/category_confirm_delete.html', {'category': category})
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(Category, pk=pk)
+#     def post(self, request, pk):
+#         category = self.get_object(pk)
+#         category.delete()
+#         return redirect('recipeinfo_category_list_urlpattern')
+
+
+class IngredientList(ListView):
     model = Ingredient
+
+
+
+# class IngredientList(PageLinksMixin, ListView):
+#     paginate_by = 10
+#     model = Ingredient
 
 
 # class IngredientList(View):
@@ -180,58 +208,75 @@ class IngredientDetail(View):
             {'ingredient': ingredient, 'is_vegetarian': is_vegetarian}
         )
 
-class IngredientCreate(ObjectCreateMixin, View):
+class IngredientCreate(CreateView):
     form_class = IngredientForm
-    template_name = 'recipeinfo/ingredient_form.html'
+    model = Ingredient
 
-class IngredientUpdate(View):
+
+class IngredientUpdate(UpdateView):
     form_class = IngredientForm
     model = Ingredient
     template_name = 'recipeinfo/ingredient_form_update.html'
 
-    def get_object(self, pk):
-        return get_object_or_404(self.model, pk=pk)
 
-    def get(self, request, pk):
-        ingredient = self.get_object(pk)
-        context = {'form': self.form_class(instance=ingredient), 'ingredient': ingredient}
-        return render(request, self.template_name, context)
-
-    def post(self, request, pk):
-        ingredient = self.get_object(pk)
-        bound_form = self.form_class(request.POST, instance=ingredient)
-        if bound_form.is_valid():
-            new_ingredient = bound_form.save()
-            return redirect(new_ingredient)
-        else:
-            context = {'form': bound_form, 'ingredient': ingredient}
-            return render(request, self.template_name, context)
-
-
-
-class IngredientDelete(View):
-    def get(self, request, pk):
-        ingredient = self.get_object(pk)
-        recipe_ingredients = ingredient.recipe_ingredients.all()
-        beverage_ingredients = ingredient.beverage_ingredients.all()
-
-        if recipe_ingredients.count() > 0 or beverage_ingredients.count() > 0:
-            return render(request, 'recipeinfo/ingredient_refuse_delete.html', {'ingredient': ingredient, 'recipe_ingredients': recipe_ingredients, 'beverage_ingredients': beverage_ingredients})
-        else:
-            return render(request, 'recipeinfo/ingredient_confirm_delete.html', {'ingredient': ingredient})
-
-    def get_object(self, pk):
-        return get_object_or_404(Ingredient, pk=pk)
-    def post(self, request, pk):
-        ingredient = self.get_object(pk)
-        ingredient.delete()
-        return redirect('recipeinfo_ingredient_list_urlpattern')
+# class IngredientUpdate(View):
+#     form_class = IngredientForm
+#     model = Ingredient
+#     template_name = 'recipeinfo/ingredient_form_update.html'
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(self.model, pk=pk)
+#
+#     def get(self, request, pk):
+#         ingredient = self.get_object(pk)
+#         context = {'form': self.form_class(instance=ingredient), 'ingredient': ingredient}
+#         return render(request, self.template_name, context)
+#
+#     def post(self, request, pk):
+#         ingredient = self.get_object(pk)
+#         bound_form = self.form_class(request.POST, instance=ingredient)
+#         if bound_form.is_valid():
+#             new_ingredient = bound_form.save()
+#             return redirect(new_ingredient)
+#         else:
+#             context = {'form': bound_form, 'ingredient': ingredient}
+#             return render(request, self.template_name, context)
 
 
 
-class Recipe_TypeList(PageLinksMixin, ListView):
-    paginate_by = 5
+class IngredientDelete(DeleteView):
+    model = Ingredient
+    success_url = reverse_lazy('recipeinfo_ingredient_list_urlpattern')
+
+
+# class IngredientDelete(View):
+#     def get(self, request, pk):
+#         ingredient = self.get_object(pk)
+#         recipe_ingredients = ingredient.recipe_ingredients.all()
+#         beverage_ingredients = ingredient.beverage_ingredients.all()
+#
+#         if recipe_ingredients.count() > 0 or beverage_ingredients.count() > 0:
+#             return render(request, 'recipeinfo/ingredient_refuse_delete.html', {'ingredient': ingredient, 'recipe_ingredients': recipe_ingredients, 'beverage_ingredients': beverage_ingredients})
+#         else:
+#             return render(request, 'recipeinfo/ingredient_confirm_delete.html', {'ingredient': ingredient})
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(Ingredient, pk=pk)
+#     def post(self, request, pk):
+#         ingredient = self.get_object(pk)
+#         ingredient.delete()
+#         return redirect('recipeinfo_ingredient_list_urlpattern')
+
+
+
+class Recipe_TypeList(ListView):
     model = Recipe_Type
+
+
+
+# class Recipe_TypeList(PageLinksMixin, ListView):
+#     paginate_by = 5
+#     model = Recipe_Type
 
 
 # class Recipe_TypeList(View):
@@ -291,59 +336,73 @@ class Recipe_TypeDetail(View):
         )
 
 
-class Recipe_TypeCreate(ObjectCreateMixin, View):
-    form_class = Recipe_TypeForm
-    template_name = 'recipeinfo/recipe_type_form.html'
+class Recipe_TypeCreate(CreateView):
+    form_class = Recipe_Type
+    model = Recipe_Type
 
 
-class Recipe_TypeUpdate(View):
+class Recipe_TypeUpdate(UpdateView):
     form_class = Recipe_TypeForm
     model = Recipe_Type
-    template_name = 'recipeinfo/Recipe_Type_form_update.html'
-
-    def get_object(self, pk):
-        return get_object_or_404(self.model, pk=pk)
-
-    def get(self, request, pk):
-        Recipe_Type = self.get_object(pk)
-        context = {'form': self.form_class(instance=Recipe_Type), 'Recipe_Type': Recipe_Type}
-        return render(request, self.template_name, context)
-
-    def post(self, request, pk):
-        Recipe_Type = self.get_object(pk)
-        bound_form = self.form_class(request.POST, instance=Recipe_Type)
-        if bound_form.is_valid():
-            new_Recipe_Type = bound_form.save()
-            return redirect(new_Recipe_Type)
-        else:
-            context = {'form': bound_form, 'Recipe_Type': Recipe_Type}
-            return render(request, self.template_name, context)
+    template_name = 'recipeinfo/recipe_type_form_update.html'
 
 
-class Recipe_TypeDelete(View):
-    def get(self, request, pk):
-        recipe_type = self.get_object(pk)
-        recipes = recipe_type.recipes.all()
+# class Recipe_TypeUpdate(View):
+#     form_class = Recipe_TypeForm
+#     model = Recipe_Type
+#     template_name = 'recipeinfo/Recipe_Type_form_update.html'
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(self.model, pk=pk)
+#
+#     def get(self, request, pk):
+#         Recipe_Type = self.get_object(pk)
+#         context = {'form': self.form_class(instance=Recipe_Type), 'Recipe_Type': Recipe_Type}
+#         return render(request, self.template_name, context)
+#
+#     def post(self, request, pk):
+#         Recipe_Type = self.get_object(pk)
+#         bound_form = self.form_class(request.POST, instance=Recipe_Type)
+#         if bound_form.is_valid():
+#             new_Recipe_Type = bound_form.save()
+#             return redirect(new_Recipe_Type)
+#         else:
+#             context = {'form': bound_form, 'Recipe_Type': Recipe_Type}
+#             return render(request, self.template_name, context)
 
-        if recipes.count() > 0:
-            return render(request, 'recipeinfo/recipe_type_refuse_delete.html', {'recipe_type': recipe_type, 'recipes': recipes})
-        else:
-            return render(request, 'recipeinfo/recipe_type_confirm_delete.html', {'recipe_type': recipe_type})
 
-    def get_object(self, pk):
-        return get_object_or_404(Recipe_Type, pk=pk)
-
-    def post(self, request, pk):
-        recipe = self.get_object(pk)
-        recipe.delete()
-        return redirect('recipeinfo_recipe_list_urlpattern')
+class Recipe_TypeDelete(DeleteView):
+    model = Recipe_Type
+    success_url = reverse_lazy('recipeinfo_recipe_type_list_urlpattern')
 
 
+# class Recipe_TypeDelete(View):
+#     def get(self, request, pk):
+#         recipe_type = self.get_object(pk)
+#         recipes = recipe_type.recipes.all()
+#
+#         if recipes.count() > 0:
+#             return render(request, 'recipeinfo/recipe_type_refuse_delete.html', {'recipe_type': recipe_type, 'recipes': recipes})
+#         else:
+#             return render(request, 'recipeinfo/recipe_type_confirm_delete.html', {'recipe_type': recipe_type})
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(Recipe_Type, pk=pk)
+#
+#     def post(self, request, pk):
+#         recipe = self.get_object(pk)
+#         recipe.delete()
+#         return redirect('recipeinfo_recipe_list_urlpattern')
 
 
-class BeverageList(PageLinksMixin, ListView):
-    paginate_by = 5
+
+class BeverageList(ListView):
     model = Beverage
+
+
+# class BeverageList(PageLinksMixin, ListView):
+#     paginate_by = 5
+#     model = Beverage
 
 
 
@@ -405,59 +464,74 @@ class BeverageDetail(View):
         )
 
 
-class BeverageCreate(ObjectCreateMixin, View):
-    form_class = BeverageForm
-    template_name = 'recipeinfo/beverage_form.html'
+class BeverageCreate(CreateView):
+    form_class = Beverage
+    model = Beverage
 
 
-class BeverageUpdate(View):
+class BeverageUpdate(UpdateView):
     form_class = BeverageForm
     model = Beverage
     template_name = 'recipeinfo/beverage_form_update.html'
 
-    def get_object(self, pk):
-        return get_object_or_404(self.model, pk=pk)
-
-    def get(self, request, pk):
-        beverage = self.get_object(pk)
-        context = {'form': self.form_class(instance=beverage), 'beverage': beverage}
-        return render(request, self.template_name, context)
-
-    def post(self, request, pk):
-        beverage = self.get_object(pk)
-        bound_form = self.form_class(request.POST, instance=beverage)
-        if bound_form.is_valid():
-            new_beverage = bound_form.save()
-            return redirect(new_beverage)
-        else:
-            context = {'form': bound_form, 'beverage': beverage}
-            return render(request, self.template_name, context)
 
 
-class BeverageDelete(View):
-    def get(self, request, pk):
-        beverage = self.get_object(pk)
-        recipes = beverage.recipes.all()
+# class BeverageUpdate(View):
+#     form_class = BeverageForm
+#     model = Beverage
+#     template_name = 'recipeinfo/beverage_form_update.html'
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(self.model, pk=pk)
+#
+#     def get(self, request, pk):
+#         beverage = self.get_object(pk)
+#         context = {'form': self.form_class(instance=beverage), 'beverage': beverage}
+#         return render(request, self.template_name, context)
+#
+#     def post(self, request, pk):
+#         beverage = self.get_object(pk)
+#         bound_form = self.form_class(request.POST, instance=beverage)
+#         if bound_form.is_valid():
+#             new_beverage = bound_form.save()
+#             return redirect(new_beverage)
+#         else:
+#             context = {'form': bound_form, 'beverage': beverage}
+#             return render(request, self.template_name, context)
 
-        if recipes.count() > 0:
-            return render(request, 'recipeinfo/beverage_refuse_delete.html', {'beverage': beverage, 'recipes': recipes})
-        else:
-            return render(request, 'recipeinfo/beverage_confirm_delete.html', {'beverage': beverage})
 
-    def get_object(self, pk):
-        return get_object_or_404(Beverage, pk=pk)
-
-    def post(self, request, pk):
-        beverage = self.get_object(pk)
-        beverage.beverage_ingredients.all().delete()
-        beverage.delete()
-        return redirect('recipeinfo_beverage_list_urlpattern')
+class BeverageDelete(DeleteView):
+    model = Beverage
+    success_url = reverse_lazy('recipeinfo_beverage_list_urlpattern')
 
 
+# class BeverageDelete(View):
+#     def get(self, request, pk):
+#         beverage = self.get_object(pk)
+#         recipes = beverage.recipes.all()
+#
+#         if recipes.count() > 0:
+#             return render(request, 'recipeinfo/beverage_refuse_delete.html', {'beverage': beverage, 'recipes': recipes})
+#         else:
+#             return render(request, 'recipeinfo/beverage_confirm_delete.html', {'beverage': beverage})
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(Beverage, pk=pk)
+#
+#     def post(self, request, pk):
+#         beverage = self.get_object(pk)
+#         beverage.beverage_ingredients.all().delete()
+#         beverage.delete()
+#         return redirect('recipeinfo_beverage_list_urlpattern')
 
-class RecipeList(PageLinksMixin, ListView):
-    paginate_by = 5
+
+class RecipeList(ListView):
     model = Recipe
+
+
+# class RecipeList(PageLinksMixin, ListView):
+#     paginate_by = 5
+#     model = Recipe
 
 
 # class RecipeList(View):
@@ -518,44 +592,58 @@ class RecipeDetail(View):
         )
 
 
-class RecipeCreate(ObjectCreateMixin, View):
-    form_class = RecipeForm
-    template_name = 'recipeinfo/recipe_form.html'
+class RecipeCreate(CreateView):
+    form_class = Recipe
+    model = Recipe
 
 
-class RecipeUpdate(View):
+
+class RecipeUpdate(UpdateView):
     form_class = RecipeForm
     model = Recipe
     template_name = 'recipeinfo/recipe_form_update.html'
 
-    def get_object(self, pk):
-        return get_object_or_404(self.model, pk=pk)
 
-    def get(self, request, pk):
-        recipe = self.get_object(pk)
-        context = {'form': self.form_class(instance=recipe), 'recipe': recipe}
-        return render(request, self.template_name, context)
 
-    def post(self, request, pk):
-        recipe = self.get_object(pk)
-        bound_form = self.form_class(request.POST, instance=recipe)
-        if bound_form.is_valid():
-            new_recipe = bound_form.save()
-            return redirect(new_recipe)
-        else:
-            context = {'form': bound_form, 'recipe': recipe}
-            return render(request, self.template_name, context)
+# class RecipeUpdate(View):
+#     form_class = RecipeForm
+#     model = Recipe
+#     template_name = 'recipeinfo/recipe_form_update.html'
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(self.model, pk=pk)
+#
+#     def get(self, request, pk):
+#         recipe = self.get_object(pk)
+#         context = {'form': self.form_class(instance=recipe), 'recipe': recipe}
+#         return render(request, self.template_name, context)
+#
+#     def post(self, request, pk):
+#         recipe = self.get_object(pk)
+#         bound_form = self.form_class(request.POST, instance=recipe)
+#         if bound_form.is_valid():
+#             new_recipe = bound_form.save()
+#             return redirect(new_recipe)
+#         else:
+#             context = {'form': bound_form, 'recipe': recipe}
+#             return render(request, self.template_name, context)
 
-class RecipeDelete(View):
-    def get(self, request, pk):
-        recipe = self.get_object(pk)
-        return render(request, 'recipeinfo/recipe_confirm_delete.html', {'recipe': recipe})
 
-    def get_object(self, pk):
-        return get_object_or_404(Recipe, pk=pk)
+class RecipeDelete(DeleteView):
+    model = Recipe
+    success_url = reverse_lazy('recipeinfo_recipe_list_urlpattern')
 
-    def post(self, request, pk):
-        recipe = self.get_object(pk)
-        recipe.recipe_ingredients.all().delete()
-        recipe.delete()
-        return redirect('recipeinfo_recipe_list_urlpattern')
+
+# class RecipeDelete(View):
+#     def get(self, request, pk):
+#         recipe = self.get_object(pk)
+#         return render(request, 'recipeinfo/recipe_confirm_delete.html', {'recipe': recipe})
+#
+#     def get_object(self, pk):
+#         return get_object_or_404(Recipe, pk=pk)
+#
+#     def post(self, request, pk):
+#         recipe = self.get_object(pk)
+#         recipe.recipe_ingredients.all().delete()
+#         recipe.delete()
+#         return redirect('recipeinfo_recipe_list_urlpattern')
