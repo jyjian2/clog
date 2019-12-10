@@ -1,4 +1,16 @@
-from django.shortcuts import redirect
+from django.contrib import admin
+from django.urls import path, include
+from django.views.generic import RedirectView
 
-def redirect_root_view(request):
-    return redirect('recipeinfo_recipe_list_urlpattern')
+urlpatterns = [
+
+    path('',
+         RedirectView.as_view(
+             pattern_name='recipeinfo_recipe_list_urlpattern',
+             permanent= False
+         )),
+
+    path('admin/', admin.site.urls),
+
+    path('', include('recipeinfo.urls'))
+]
