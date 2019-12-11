@@ -134,7 +134,7 @@ class DessertDetail(View):
 
 
 class DessertCreate(CreateView):
-    form_class = Dessert
+    form_class = DessertForm
     model = Dessert
 
 
@@ -167,7 +167,7 @@ class BeverageDetail(View):
 
 
 class BeverageCreate(CreateView):
-    form_class = Beverage
+    form_class = BeverageForm
     model = Beverage
 
 
@@ -200,7 +200,7 @@ class RecipeDetail(View):
 
 
 class RecipeCreate(CreateView):
-    form_class = Recipe
+    form_class = RecipeForm
     model = Recipe
 
 
