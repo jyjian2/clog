@@ -1,0 +1,24 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Dessert List
+{% endblock %}
+
+
+{% block content %}
+<h2>Dessert List</h2>
+    <div>
+         <a href="{% url 'recipeinfo_dessert_create_urlpattern' %}"
+         class="button button-primary">Create New Dessert</a>
+    </div>
+<ul>
+    {% for dessert in dessert_list %}
+        <li>
+        <a href="{{ dessert.get_absolute_url }}">{{ dessert }}</a>
+        </li>
+    {% empty %}
+{#        empty is like the end of for loop. When ingredient_list is empty, stopped. #}
+        <li><em>There are currently no desserts in the list.</em></li>
+    {% endfor %}
+</ul>
+{% endblock %}

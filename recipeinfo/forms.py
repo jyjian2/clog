@@ -1,6 +1,6 @@
 from django import forms
 
-from recipeinfo.models import Category, Ingredient, Recipe_Type, Beverage, Recipe
+from recipeinfo.models import Category, Ingredient, Recipe_Type, Beverage, Recipe, Dessert
 
 
 class CategoryForm(forms.ModelForm):
@@ -30,9 +30,9 @@ class Recipe_TypeForm(forms.ModelForm):
     def clean_recipe_type_name(self):
         return self.cleaned_data['recipe_type_name'].strip()
 
-class BeverageForm(forms.ModelForm):
+class DessertForm(forms.ModelForm):
     class Meta:
-        model = Beverage
+        model = Dessert
         fields = '__all__'
 
     def clean_beverage_name(self):
@@ -40,6 +40,14 @@ class BeverageForm(forms.ModelForm):
 
     def clean_beverage_type(self):
         return self.cleaned_data['beverage_type'].strip()
+
+class BeverageForm(forms.ModelForm):
+    class Meta:
+        model = Beverage
+        fields = '__all__'
+
+    def clean_beverage_name(self):
+        return self.cleaned_data['dessert_name'].strip()
 
 class RecipeForm(forms.ModelForm):
     class Meta:

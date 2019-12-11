@@ -21,6 +21,11 @@ from recipeinfo.views import (
     BeverageCreate,
     BeverageUpdate,
     BeverageDelete,
+    DessertList,
+    DessertDetail,
+    DessertCreate,
+    DessertUpdate,
+    DessertDelete,
     RecipeList,
     RecipeDetail,
     RecipeCreate,
@@ -93,6 +98,26 @@ urlpatterns = [
     path('recipe_types/<int:pk>/delete/',
          Recipe_TypeDelete.as_view(),
          name='recipeinfo_recipe_type_delete_urlpattern'),
+
+    path('desserts/',
+         DessertList.as_view(),
+         name='recipeinfo_dessert_list_urlpattern'),
+
+    path('desserts/<int:pk>/',
+        DessertDetail.as_view(),
+         name='recipeinfo_dessert_detail_urlpattern'),
+
+    path('desserts/create/',
+        DessertCreate.as_view(),
+        name='recipeinfo_dessert_create_urlpattern'),
+
+    path('desserts/<int:pk>/update/',
+         DessertUpdate.as_view(),
+         name='recipeinfo_dessert_update_urlpattern'),
+
+    path('desserts/<int:pk>/delete/',
+         DessertDelete.as_view(),
+         name='recipeinfo_dessert_delete_urlpattern'),
 
     path('beverages/',
          BeverageList.as_view(),

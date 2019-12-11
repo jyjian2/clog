@@ -1,0 +1,28 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Dessert - {{ dessert }}
+{%  endblock %}
+
+{% block content %}
+<h2>{{ dessert }}</h2>
+    <ul>
+    <li><a href="{{ dessert.get_update_url }}"
+        class="button">Edit Dessert</a> </li>
+    <li><a href="{{ dessert.get_delete_url }}"
+        class="button">Delete Dessert</a></li>
+    </ul>
+
+<section>
+    <h3>Recipes</h3>
+    <ul>
+        {% for r in recipe_list %}
+        <li>
+            <a href="{{ r.get_absolute_url }}">{{ r }}</a>
+        </li>
+        {% empty %}
+        <li><em>The desserts are currently not suitable for any recipes.</em></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

@@ -84,11 +84,32 @@ class Beverage(models.Model):
         ordering = ['beverage_name']
 
 
+class Dessert(models.Model):
+    dessert_id = models.AutoField(primary_key=True)
+    dessert_name = models.CharField(max_length=45)
+
+    def __str__(self):
+        return '%s' % (self.dessert_name)
+
+    def get_absolute_url(self):
+        return reverse('recipeinfo_dessert_detail_urlpattern', kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('recipeinfo_dessert_update_urlpattern', kwargs={'pk': self.pk})
+
+    def get_delete_url(self):
+        return reverse('recipeinfo_dessert_delete_urlpattern',kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['dessert_name']
+
 class Recipe(models.Model):
     recipe_id = models.AutoField(primary_key=True)
     recipe_name = models.CharField(max_length=45)
     recipe_type = models.ForeignKey(Recipe_Type, related_name='recipes', on_delete=models.PROTECT)
     beverage = models.ForeignKey(Beverage, related_name='recipes', on_delete=models.PROTECT)
+    dessert = models.ForeignKey(Dessert, related_name='recipes', on_delete=models.PROTECT, null=True)
+
 
     def __str__(self):
         return '%s' % (self.recipe_name)
@@ -117,3 +138,9 @@ class Beverage_Ingredient(models.Model):
     beverage_ingredient_id = models.AutoField(primary_key=True)
     ingredient = models.ForeignKey(Ingredient, related_name='beverage_ingredients', on_delete=models.PROTECT)
     beverage = models.ForeignKey(Beverage, related_name='beverage_ingredients', on_delete=models.PROTECT)
+
+
+class Dessert_Ingredient(models.Model):
+    dessert_ingredient_id = models.AutoField(primary_key=True)
+    ingredient = models.ForeignKey(Ingredient, related_name='dessert_ingredients', on_delete=models.PROTECT)
+    dessert = models.ForeignKey(Dessert, related_name='dessert_ingredients', on_delete=models.PROTECT)

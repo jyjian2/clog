@@ -1,0 +1,27 @@
+{% extends 'recipeinfo/base.html' %}
+
+{% block title %}
+    Error Deleting Dessert
+{%  endblock %}
+
+{% block content %}
+    <div>
+        <h2>Error Deleting Dessert</h2>
+        <p>
+            You may not delete {{ dessert }}. This
+            dessert is currently assigned to the following
+            recipes:
+        </p>
+
+        <ul>
+            {% for b in recipes %}
+            <li><a href="{{ b.get_absolute_url }}">{{ b }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <p>
+            Return to <a href="{%  url 'recipeinfo_dessert_list_urlpattern' %}">Dessert List</a>.
+        </p>
+
+    </div>
+{% endblock %}

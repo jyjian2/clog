@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 
-from recipeinfo.forms import CategoryForm, IngredientForm, Recipe_TypeForm, BeverageForm, RecipeForm
+from recipeinfo.forms import CategoryForm, IngredientForm, Recipe_TypeForm, BeverageForm, RecipeForm, DessertForm
 from recipeinfo.utils import PageLinksMixin
 from .models import (
     Ingredient,
@@ -12,6 +12,7 @@ from .models import (
     Beverage,
     Category,
     Recipe_Type,
+    Dessert,
 )
 
 
@@ -113,6 +114,39 @@ class Recipe_TypeUpdate(UpdateView):
 class Recipe_TypeDelete(DeleteView):
     model = Recipe_Type
     success_url = reverse_lazy('recipeinfo_recipe_type_list_urlpattern')
+
+
+class DessertList(PageLinksMixin, ListView):
+    paginate_by = 5
+    model = Dessert
+
+
+class DessertDetail(View):
+    def get(self, request, pk):
+        dessert = get_object_or_404(Dessert, pk=pk)
+        recipe_list = dessert.recipes.all()
+        return render(
+            request,
+            'recipeinfo/dessert_detail.html',
+            {'dessert': dessert, 'recipe_list': recipe_list}
+
+        )
+
+
+class DessertCreate(CreateView):
+    form_class = Dessert
+    model = Dessert
+
+
+class DessertUpdate(UpdateView):
+    form_class = DessertForm
+    model = Dessert
+    template_name = 'recipeinfo/dessert_form_update.html'
+
+
+class DessertDelete(DeleteView):
+    model = Dessert
+    success_url = reverse_lazy('recipeinfo_dessert_list_urlpattern')
 
 
 class BeverageList(PageLinksMixin, ListView):
