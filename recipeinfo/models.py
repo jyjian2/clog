@@ -89,7 +89,7 @@ class Dessert(models.Model):
     dessert_name = models.CharField(max_length=45)
 
     def __str__(self):
-        return '%s' % (self.dessert_name)
+        return '%s' % self.dessert_name
 
     def get_absolute_url(self):
         return reverse('recipeinfo_dessert_detail_urlpattern', kwargs={'pk': self.pk})
