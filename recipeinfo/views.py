@@ -192,10 +192,15 @@ class RecipeDetail(View):
         recipe = get_object_or_404(Recipe, pk=pk)
         # recipe_ingredients is a related name of Recipe_Ingredients defined in model.py
         recipe_ingredient_list = recipe.recipe_ingredients.all()
+        is_vegetarian = True
+        for ri in recipe_ingredient_list:
+            if ri.ingredient.is_vegetarian == False:
+                is_vegetarian = False
+
         return render(
             request,
             'recipeinfo/recipe_detail.html',
-            {'recipe': recipe, 'recipe_ingredient_list': recipe_ingredient_list}
+            {'recipe': recipe, 'recipe_ingredient_list': recipe_ingredient_list, 'is_vegetarian': is_vegetarian}
         )
 
 

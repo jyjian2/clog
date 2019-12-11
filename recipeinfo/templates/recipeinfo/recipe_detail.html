@@ -6,6 +6,7 @@
 
 {% block content %}
 <h2>{{ recipe }}</h2>
+    <h3>Vegetarian? {{ is_vegetarian }} </h3>
     <ul>
     <li><a href="{{ recipe.get_update_url }}"
     class="button">Edit Recipe</a> </li>
