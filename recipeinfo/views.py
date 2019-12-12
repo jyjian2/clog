@@ -56,6 +56,7 @@ class IngredientList(PageLinksMixin, ListView):
 class IngredientDetail(View):
     def get(self, request, pk):
         ingredient = get_object_or_404(Ingredient, pk=pk)
+        recipe_ingredient_list = ingredient.recipe_ingredients.all()
         if ingredient.is_vegetarian == 0:
             is_vegetarian = 'NO'
         else:
@@ -64,7 +65,7 @@ class IngredientDetail(View):
         return render(
             request,
             'recipeinfo/ingredient_detail.html',
-            {'ingredient': ingredient, 'is_vegetarian': is_vegetarian}
+            {'ingredient': ingredient, 'is_vegetarian': is_vegetarian, 'recipe_ingredient_list': recipe_ingredient_list}
         )
 
 

@@ -27,6 +27,14 @@
             <th>What is its category:</th>
             <td>{{ ingredient.category }}</td>
         </tr>
+            <th>Recipes that contain {{ ingredient.ingredient_name }}</th>
+            <td>{% for ri in recipe_ingredient_list %}
+        <li>
+            <a href="{{ ri.recipe.get_absolute_url }}">{{ ri.recipe }}</a>
+        </li>
+        {% empty %}
+        <li><em>The ingredient are currently not included in any recipes.</em></li>
+        {% endfor %}</td>
     </table>
 </section>
 {% endblock %}
