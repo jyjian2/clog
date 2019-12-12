@@ -8,10 +8,14 @@
 <h2>{{ recipe }}</h2>
     <h3>Vegetarian? {{ is_vegetarian }} </h3>
     <ul>
+    {% if perms.recipeinfo.change_recipe %}
     <li><a href="{{ recipe.get_update_url }}"
-    class="button">Edit Recipe</a> </li>
+    class="button">Edit Recipe</a></li>
+        {% endif %}
+    {% if perms.recipeinfo.delete_recipe %}
     <li><a href="{{ recipe.get_delete_url }}"
     class="button">Delete Recipe</a></li>
+    {% endif %}
     </ul>
 
 

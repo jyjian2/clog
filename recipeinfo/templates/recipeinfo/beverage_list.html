@@ -7,10 +7,12 @@
 
 {% block content %}
 <h2>Beverage List</h2>
+    {% if perms.recipeinfo.add_beverage %}
     <div>
          <a href="{% url 'recipeinfo_beverage_create_urlpattern' %}"
          class="button button-primary">Create New Beverage</a>
     </div>
+    {% endif %}
 <ul>
     {% for beverage in beverage_list %}
         <li>

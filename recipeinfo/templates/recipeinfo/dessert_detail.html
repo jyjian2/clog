@@ -7,10 +7,14 @@
 {% block content %}
 <h2>{{ dessert }}</h2>
     <ul>
+    {% if perms.recipeinfo.change_dessert %}
     <li><a href="{{ dessert.get_update_url }}"
-        class="button">Edit Dessert</a> </li>
+        class="button">Edit Dessert</a></li>
+        {% endif %}
+    {% if perms.recipeinfo.delete_dessert %}
     <li><a href="{{ dessert.get_delete_url }}"
         class="button">Delete Dessert</a></li>
+    {% endif %}
     </ul>
 
 <section>

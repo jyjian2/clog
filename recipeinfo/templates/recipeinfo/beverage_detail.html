@@ -6,11 +6,15 @@
 
 {% block content %}
 <h2>{{ beverage }}</h2>
+    {% if perms.recipeinfo.change_beverage %}
     <ul>
     <li><a href="{{ beverage.get_update_url }}"
         class="button">Edit Beverage</a> </li>
+        {% endif%}
+    {% if perms.recipeinfo.delete_beverage %}
     <li><a href="{{ beverage.get_delete_url }}"
         class="button">Delete Beverage</a></li>
+    {% endif %}
     </ul>
 
 <section>

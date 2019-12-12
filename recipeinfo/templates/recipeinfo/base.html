@@ -45,6 +45,8 @@
     </header>
     <nav>
         <ul>
+            {% if user.is_authenticated %}
+
             <li>
                 <a href="{% url 'recipeinfo_category_list_urlpattern' %}">
                     Categories</a></li>
@@ -63,6 +65,7 @@
             <li>
                 <a href="{% url 'recipeinfo_recipe_list_urlpattern' %}">
                     Recipes</a></li>
+            {% endif %}
             <li>
                 <a href="{% url 'about_urlpattern' %}">
                     About</a></li>

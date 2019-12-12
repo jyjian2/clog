@@ -2,27 +2,31 @@
 
 {% block title %}
     Recipe Type - {{ recipe_type.recipe_type_name }}
-{%  endblock %}
+{% endblock %}
 
 {% block content %}
-<h2>{{ recipe_type.recipe_type_name }}</h2>
+    <h2>{{ recipe_type.recipe_type_name }}</h2>
     <ul>
-    <li><a href="{{ recipe_type.get_update_url }}"
-    class="button">Edit Recipe Type</a> </li>
-    <li><a href="{{ recipe_type.get_delete_url }}"
-    class="button">Delete Recipe Type</a></li>
+        {% if perms.recipeinfo.change_recipe_type %}
+            <li><a href="{{ recipe_type.get_update_url }}"
+                   class="button">Edit Recipe Type</a></li>
+        {% endif %}
+        {% if perms.recipeinfo.delete_recipe_type %}
+            <li><a href="{{ recipe_type.get_delete_url }}"
+                   class="button">Delete Recipe Type</a></li>
+        {% endif %}
     </ul>
 
-<section>
-    <h3>Recipes belong to this recipe type:</h3>
-    <ul>
-        {% for r in recipe_list %}
-        <li>
-            <a href="{{ r.get_absolute_url }}">{{ r }}</a>
-        </li>
-        {% empty %}
-        <li><em>The recipe type currently does not have any recipes.</em></li>
-        {% endfor %}
-    </ul>
-</section>
+    <section>
+        <h3>Recipes belong to this recipe type:</h3>
+        <ul>
+            {% for r in recipe_list %}
+                <li>
+                    <a href="{{ r.get_absolute_url }}">{{ r }}</a>
+                </li>
+            {% empty %}
+                <li><em>The recipe type currently does not have any recipes.</em></li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock %}

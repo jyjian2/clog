@@ -7,10 +7,12 @@
 
 {% block content %}
 <h2>Cuisine Type</h2>
+    {% if perms.recipeinfo.add_recipe_type %}
     <div>
          <a href="{% url 'recipeinfo_recipe_type_create_urlpattern' %}"
          class="button button-primary">Create New Recipe Type</a>
     </div>
+    {% endif %}
 <ul>
     {% for recipe_type in recipe_type_list %}
         <li>

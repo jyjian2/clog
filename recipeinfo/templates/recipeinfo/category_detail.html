@@ -7,10 +7,14 @@
 {% block content %}
     <h2>{{ category }}</h2>
     <ul>
+    {% if perms.recipeinfo.change_category %}
         <li><a href="{{ category.get_update_url }}"
         class="button">Edit Recipe Category</a> </li>
+        {% endif %}
+        {% if perms.recipeinfo.delete_category %}
         <li><a href="{{ category.get_delete_url }}"
         class="button">Delete Recipe Category</a></li>
+    {% endif %}
     </ul>
 
     <section>

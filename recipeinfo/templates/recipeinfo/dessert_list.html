@@ -7,10 +7,12 @@
 
 {% block content %}
 <h2>Dessert List</h2>
+    {% if perms.recipeinfo.add_dessert %}
     <div>
          <a href="{% url 'recipeinfo_dessert_create_urlpattern' %}"
          class="button button-primary">Create New Dessert</a>
     </div>
+    {% endif %}
 <ul>
     {% for dessert in dessert_list %}
         <li>

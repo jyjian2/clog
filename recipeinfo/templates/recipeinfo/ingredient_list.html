@@ -7,10 +7,12 @@
 
 {% block content %}
 <h2>Cuisine Ingredient List</h2>
+    {% if perms.recipeinfo.add_ingredient %}
     <div>
          <a href="{% url 'recipeinfo_ingredient_create_urlpattern' %}"
          class="button button-primary">Create New Ingredient</a>
     </div>
+    {% endif %}
 <ul>
     {% for ingredient in ingredient_list %}
         <li>
