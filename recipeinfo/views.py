@@ -48,10 +48,21 @@ class CategoryUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     permission_required = 'recipeinfo.change_category'
 
 
-class CategoryDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
-    permission_required = 'recipeinfo.delete_category'
-    model = Category
-    success_url = reverse_lazy('recipeinfo_category_list_urlpattern')
+class CategoryDelete(View):
+    def get(self, request, pk):
+        category = self.get_object(pk)
+        ingredients = category.ingredients.all()
+        if ingredients.count() > 0:
+            return render(request, 'recipeinfo/category_refuse_delete.html', {'category': category, 'ingredients': ingredients})
+        else:
+            return render(request, 'recipeinfo/category_confirm_delete.html', {'category': category})
+
+    def get_object(self, pk):
+        return get_object_or_404(Category, pk=pk)
+    def post(self, request, pk):
+        category = self.get_object(pk)
+        category.delete()
+        return redirect('recipeinfo_category_list_urlpattern')
 
 
 class IngredientList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
@@ -91,10 +102,23 @@ class IngredientUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     permission_required = 'recipeinfo.change_ingredient'
 
 
-class IngredientDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
-    permission_required = 'recipeinfo.delete_ingredient'
-    model = Ingredient
-    success_url = reverse_lazy('recipeinfo_ingredient_list_urlpattern')
+class IngredientDelete(View):
+    def get(self, request, pk):
+        ingredient = self.get_object(pk)
+        recipe_ingredients = ingredient.recipe_ingredients.all()
+        beverage_ingredients = ingredient.beverage_ingredients.all()
+
+        if recipe_ingredients.count() > 0 or beverage_ingredients.count() > 0:
+            return render(request, 'recipeinfo/ingredient_refuse_delete.html', {'ingredient': ingredient, 'recipe_ingredients': recipe_ingredients, 'beverage_ingredients': beverage_ingredients})
+        else:
+            return render(request, 'recipeinfo/ingredient_confirm_delete.html', {'ingredient': ingredient})
+
+    def get_object(self, pk):
+        return get_object_or_404(Ingredient, pk=pk)
+    def post(self, request, pk):
+        ingredient = self.get_object(pk)
+        ingredient.delete()
+        return redirect('recipeinfo_ingredient_list_urlpattern')
 
 
 class Recipe_TypeList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
@@ -130,10 +154,23 @@ class Recipe_TypeUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     permission_required = 'recipeinfo.change_recipe_type'
 
 
-class Recipe_TypeDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
-    permission_required = 'recipeinfo.delete_recipe_type'
-    model = Recipe_Type
-    success_url = reverse_lazy('recipeinfo_recipe_type_list_urlpattern')
+class Recipe_TypeDelete(View):
+    def get(self, request, pk):
+        recipe_type = self.get_object(pk)
+        recipes = recipe_type.recipes.all()
+
+        if recipes.count() > 0:
+            return render(request, 'recipeinfo/recipe_type_refuse_delete.html', {'recipe_type': recipe_type, 'recipes': recipes})
+        else:
+            return render(request, 'recipeinfo/recipe_type_confirm_delete.html', {'recipe_type': recipe_type})
+
+    def get_object(self, pk):
+        return get_object_or_404(Recipe_Type, pk=pk)
+
+    def post(self, request, pk):
+        recipe = self.get_object(pk)
+        recipe.delete()
+        return redirect('recipeinfo_recipe_list_urlpattern')
 
 
 class DessertList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
@@ -209,10 +246,24 @@ class BeverageUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     permission_required = 'recipeinfo.change_beverage'
 
 
-class BeverageDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
-    permission_required = 'recipeinfo.delete_beverage'
-    model = Beverage
-    success_url = reverse_lazy('recipeinfo_beverage_list_urlpattern')
+class BeverageDelete(View):
+    def get(self, request, pk):
+        beverage = self.get_object(pk)
+        recipes = beverage.recipes.all()
+
+        if recipes.count() > 0:
+            return render(request, 'recipeinfo/beverage_refuse_delete.html', {'beverage': beverage, 'recipes': recipes})
+        else:
+            return render(request, 'recipeinfo/beverage_confirm_delete.html', {'beverage': beverage})
+
+    def get_object(self, pk):
+        return get_object_or_404(Beverage, pk=pk)
+
+    def post(self, request, pk):
+        beverage = self.get_object(pk)
+        beverage.beverage_ingredients.all().delete()
+        beverage.delete()
+        return redirect('recipeinfo_beverage_list_urlpattern')
 
 
 class RecipeList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
@@ -253,7 +304,16 @@ class RecipeUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     permission_required = 'recipeinfo.change_recipe'
 
 
-class RecipeDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
-    permission_required = 'recipeinfo.delete_recipe'
-    model = Recipe
-    success_url = reverse_lazy('recipeinfo_recipe_list_urlpattern')
+class RecipeDelete(View):
+    def get(self, request, pk):
+        recipe = self.get_object(pk)
+        return render(request, 'recipeinfo/recipe_confirm_delete.html', {'recipe': recipe})
+
+    def get_object(self, pk):
+        return get_object_or_404(Recipe, pk=pk)
+
+    def post(self, request, pk):
+        recipe = self.get_object(pk)
+        recipe.recipe_ingredients.all().delete()
+        recipe.delete()
+        return redirect('recipeinfo_recipe_list_urlpattern')
