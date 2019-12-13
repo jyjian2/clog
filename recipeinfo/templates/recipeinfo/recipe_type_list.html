@@ -1,12 +1,12 @@
 {% extends 'recipeinfo/base.html' %}
 
 {% block title %}
-    Cuisine Type
+    Recipe Type
 {% endblock %}
 
 
 {% block content %}
-<h2>Cuisine Type</h2>
+<h2>Recipe Type</h2><h6>The Type of Recipe</h6>
     {% if perms.recipeinfo.add_recipe_type %}
     <div>
          <a href="{% url 'recipeinfo_recipe_type_create_urlpattern' %}"

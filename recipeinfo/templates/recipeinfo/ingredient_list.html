@@ -6,7 +6,7 @@
 
 
 {% block content %}
-<h2>Cuisine Ingredient List</h2>
+<h2>Ingredient List</h2><h6>Ingredients of Recipes or Desserts</h6>
     {% if perms.recipeinfo.add_ingredient %}
     <div>
          <a href="{% url 'recipeinfo_ingredient_create_urlpattern' %}"
