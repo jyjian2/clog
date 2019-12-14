@@ -16,13 +16,13 @@ from .models import (
 )
 
 
-class CategoryList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
+class CategoryList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
     paginate_by = 5
     model = Category
     permission_required = 'recipeinfo.view_category'
 
 
-class CategoryDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
+class CategoryDetail(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'recipeinfo.view_category'
 
     def get(self, request, pk):
@@ -41,7 +41,7 @@ class CategoryCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = 'recipeinfo.add_category'
 
 
-class CategoryUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class CategoryUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = CategoryForm
     model = Category
     template_name = 'recipeinfo/category_form_update.html'
@@ -53,25 +53,27 @@ class CategoryDelete(View):
         category = self.get_object(pk)
         ingredients = category.ingredients.all()
         if ingredients.count() > 0:
-            return render(request, 'recipeinfo/category_refuse_delete.html', {'category': category, 'ingredients': ingredients})
+            return render(request, 'recipeinfo/category_refuse_delete.html',
+                          {'category': category, 'ingredients': ingredients})
         else:
             return render(request, 'recipeinfo/category_confirm_delete.html', {'category': category})
 
     def get_object(self, pk):
         return get_object_or_404(Category, pk=pk)
+
     def post(self, request, pk):
         category = self.get_object(pk)
         category.delete()
         return redirect('recipeinfo_category_list_urlpattern')
 
 
-class IngredientList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
+class IngredientList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
     paginate_by = 10
     model = Ingredient
     permission_required = 'recipeinfo.view_ingredient'
 
 
-class IngredientDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
+class IngredientDetail(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'recipeinfo.view_ingredient'
 
     def get(self, request, pk):
@@ -89,13 +91,13 @@ class IngredientDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class IngredientCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
+class IngredientCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = IngredientForm
     model = Ingredient
     permission_required = 'recipeinfo.add_ingredient'
 
 
-class IngredientUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class IngredientUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = IngredientForm
     model = Ingredient
     template_name = 'recipeinfo/ingredient_form_update.html'
@@ -109,26 +111,28 @@ class IngredientDelete(View):
         beverage_ingredients = ingredient.beverage_ingredients.all()
 
         if recipe_ingredients.count() > 0 or beverage_ingredients.count() > 0:
-            return render(request, 'recipeinfo/ingredient_refuse_delete.html', {'ingredient': ingredient, 'recipe_ingredients': recipe_ingredients, 'beverage_ingredients': beverage_ingredients})
+            return render(request, 'recipeinfo/ingredient_refuse_delete.html',
+                          {'ingredient': ingredient, 'recipe_ingredients': recipe_ingredients,
+                           'beverage_ingredients': beverage_ingredients})
         else:
             return render(request, 'recipeinfo/ingredient_confirm_delete.html', {'ingredient': ingredient})
 
     def get_object(self, pk):
         return get_object_or_404(Ingredient, pk=pk)
+
     def post(self, request, pk):
         ingredient = self.get_object(pk)
         ingredient.delete()
         return redirect('recipeinfo_ingredient_list_urlpattern')
 
 
-class Recipe_TypeList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
+class Recipe_TypeList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
     paginate_by = 5
     model = Recipe_Type
     permission_required = 'recipeinfo.view_recipe_type'
 
 
-
-class Recipe_TypeDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
+class Recipe_TypeDetail(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'recipeinfo.view_recipe_type'
 
     def get(self, request, pk):
@@ -141,13 +145,13 @@ class Recipe_TypeDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class Recipe_TypeCreate(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
+class Recipe_TypeCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = Recipe_TypeForm
     model = Recipe_Type
     permission_required = 'recipeinfo.add_recipe_type'
 
 
-class Recipe_TypeUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class Recipe_TypeUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = Recipe_TypeForm
     model = Recipe_Type
     template_name = 'recipeinfo/recipe_type_form_update.html'
@@ -160,7 +164,8 @@ class Recipe_TypeDelete(View):
         recipes = recipe_type.recipes.all()
 
         if recipes.count() > 0:
-            return render(request, 'recipeinfo/recipe_type_refuse_delete.html', {'recipe_type': recipe_type, 'recipes': recipes})
+            return render(request, 'recipeinfo/recipe_type_refuse_delete.html',
+                          {'recipe_type': recipe_type, 'recipes': recipes})
         else:
             return render(request, 'recipeinfo/recipe_type_confirm_delete.html', {'recipe_type': recipe_type})
 
@@ -173,14 +178,13 @@ class Recipe_TypeDelete(View):
         return redirect('recipeinfo_recipe_list_urlpattern')
 
 
-class DessertList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
+class DessertList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
     paginate_by = 5
     model = Dessert
     permission_required = 'recipeinfo.view_dessert'
 
 
-
-class DessertDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
+class DessertDetail(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'recipeinfo.view_dessert'
 
     def get(self, request, pk):
@@ -194,32 +198,46 @@ class DessertDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class DessertCreate(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
+class DessertCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = DessertForm
     model = Dessert
     permission_required = 'recipeinfo.add_dessert'
 
 
-class DessertUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class DessertUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = DessertForm
     model = Dessert
     template_name = 'recipeinfo/dessert_form_update.html'
     permission_required = 'recipeinfo.change_dessert'
 
 
-class DessertDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
-    permission_required = 'recipeinfo.delete_dessert'
-    model = Dessert
-    success_url = reverse_lazy('recipeinfo_dessert_list_urlpattern')
+# class DessertDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
+#     permission_required = 'recipeinfo.delete_dessert'
+#     model = Dessert
+#     success_url = reverse_lazy('recipeinfo_dessert_list_urlpattern')
+
+class DessertDelete(View):
+    def get(self, request, pk):
+        dessert = self.get_object(pk)
+        return render(request, 'recipeinfo/dessert_confirm_delete.html', {'dessert': dessert})
+
+    def get_object(self, pk):
+        return get_object_or_404(Dessert, pk=pk)
+
+    def post(self, request, pk):
+        dessert = self.get_object(pk)
+        dessert.dessert_ingredients.all().delete()
+        dessert.delete()
+        return redirect('recipeinfo_dessert_list_urlpattern')
 
 
-class BeverageList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
+class BeverageList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
     paginate_by = 5
     model = Beverage
     permission_required = 'recipeinfo.view_beverage'
 
 
-class BeverageDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
+class BeverageDetail(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'recipeinfo.view_beverage'
 
     def get(self, request, pk):
@@ -234,13 +252,13 @@ class BeverageDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class BeverageCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
+class BeverageCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = BeverageForm
     model = Beverage
     permission_required = 'recipeinfo.add_beverage'
 
 
-class BeverageUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class BeverageUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = BeverageForm
     model = Beverage
     template_name = 'recipeinfo/beverage_form_update.html'
@@ -267,13 +285,13 @@ class BeverageDelete(View):
         return redirect('recipeinfo_beverage_list_urlpattern')
 
 
-class RecipeList(LoginRequiredMixin,PermissionRequiredMixin,PageLinksMixin, ListView):
+class RecipeList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
     paginate_by = 5
     model = Recipe
     permission_required = 'recipeinfo.view_recipe'
 
 
-class RecipeDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
+class RecipeDetail(LoginRequiredMixin, PermissionRequiredMixin, View):
     permission_required = 'recipeinfo.view_recipe'
 
     def get(self, request, pk):
@@ -292,13 +310,13 @@ class RecipeDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class RecipeCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
+class RecipeCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = RecipeForm
     model = Recipe
     permission_required = 'recipeinfo.add_recipe'
 
 
-class RecipeUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class RecipeUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = RecipeForm
     model = Recipe
     template_name = 'recipeinfo/recipe_form_update.html'

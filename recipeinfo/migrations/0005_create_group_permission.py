@@ -68,7 +68,7 @@ def populate_permissions_lists(apps):
 
     ri_beverage_developer_permissions = chain(category_view_perm, ingredient_view_perm, ingredient_add_perm,
                                               dessert_view_perm, beverage_all_perm, recipe_view_perm,
-                                              beverage_ingredient_all_perm)
+                                              beverage_ingredient_all_perm, recipe_type_view_perm)
 
     ri_dessert_developer_permissions = chain(category_view_perm, ingredient_view_perm, ingredient_add_perm,
                                              recipe_type_view_perm, dessert_all_perm, beverage_view_perm,
