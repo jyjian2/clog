@@ -89,7 +89,7 @@ class IngredientDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class IngredientCreate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class IngredientCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
     form_class = IngredientForm
     model = Ingredient
     permission_required = 'recipeinfo.add_ingredient'
@@ -141,7 +141,7 @@ class Recipe_TypeDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class Recipe_TypeCreate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class Recipe_TypeCreate(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
     form_class = Recipe_TypeForm
     model = Recipe_Type
     permission_required = 'recipeinfo.add_recipe_type'
@@ -194,7 +194,7 @@ class DessertDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class DessertCreate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class DessertCreate(LoginRequiredMixin,PermissionRequiredMixin, CreateView):
     form_class = DessertForm
     model = Dessert
     permission_required = 'recipeinfo.add_dessert'
@@ -225,15 +225,16 @@ class BeverageDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
     def get(self, request, pk):
         beverage = get_object_or_404(Beverage, pk=pk)
         recipe_list = beverage.recipes.all()
+        beverage_ingredient_list = beverage.beverage_ingredients.all()
         return render(
             request,
             'recipeinfo/beverage_detail.html',
-            {'beverage': beverage, 'recipe_list': recipe_list}
+            {'beverage': beverage, 'recipe_list': recipe_list, 'beverage_ingredient_list': beverage_ingredient_list}
 
         )
 
 
-class BeverageCreate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class BeverageCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
     form_class = BeverageForm
     model = Beverage
     permission_required = 'recipeinfo.add_beverage'
@@ -291,7 +292,7 @@ class RecipeDetail(LoginRequiredMixin,PermissionRequiredMixin,View):
         )
 
 
-class RecipeCreate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+class RecipeCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
     form_class = RecipeForm
     model = Recipe
     permission_required = 'recipeinfo.add_recipe'

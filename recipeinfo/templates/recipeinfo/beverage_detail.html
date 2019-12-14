@@ -16,9 +16,20 @@
         class="button">Delete Beverage</a></li>
     {% endif %}
     </ul>
-
 <section>
-    <h3>Recipes</h3>
+        <h3>Ingredients of {{ beverage }}</h3>
+        <ul>
+            {% for bi in beverage_ingredient_list %}
+                <li>
+                    <a href="{{ bi.ingredient.get_absolute_url }}">{{ bi.ingredient }}</a>
+                </li>
+            {% empty %}
+                <li><em>There are currently no ingredients for this beverage.</em></li>
+            {% endfor %}
+        </ul>
+    </section>
+<section>
+    <h3>{{ beverage }} is suitable for Recipes:</h3>
     <ul>
         {% for r in recipe_list %}
         <li>

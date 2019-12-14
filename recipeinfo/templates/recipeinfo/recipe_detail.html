@@ -32,13 +32,6 @@
         </ul>
     </section>
     <section>
-    <h3>Beverages suitable for {{ recipe }}</h3>
-        {% for beverage in recipes %}
-            <li>
-                <a href="{{ beverage.get_absolute_url }}">{{ beverage }}</a>
-            </li>
-        {% empty %}
-            <li><em>There are currently no beverages suitable for this recipe.</em></li>
-        {% endfor %}
+    <h3>Beverage suitable for {{ recipe }}: <a href="{{ recipe.beverage.get_absolute_url }}">{{ recipe.beverage }}</a></h3>
     </section>
 {% endblock %}
