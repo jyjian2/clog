@@ -211,11 +211,6 @@ class DessertUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'recipeinfo.change_dessert'
 
 
-# class DessertDelete(LoginRequiredMixin,PermissionRequiredMixin,View):
-#     permission_required = 'recipeinfo.delete_dessert'
-#     model = Dessert
-#     success_url = reverse_lazy('recipeinfo_dessert_list_urlpattern')
-
 class DessertDelete(View):
     def get(self, request, pk):
         dessert = self.get_object(pk)

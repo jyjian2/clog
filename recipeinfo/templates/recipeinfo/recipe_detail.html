@@ -6,7 +6,7 @@
 
 {% block content %}
     <h2>{{ recipe }}</h2>
-    <h3>Vegetarian? {{ is_vegetarian }} </h3>
+    <h4>Vegetarian? {{ is_vegetarian }} </h4>
     <ul>
         {% if perms.recipeinfo.change_recipe %}
             <li><a href="{{ recipe.get_update_url }}"
@@ -32,6 +32,6 @@
         </ul>
     </section>
     <section>
-    <h3>Beverage suitable for {{ recipe }}: <a href="{{ recipe.beverage.get_absolute_url }}">{{ recipe.beverage }}</a></h3>
+    <h4>Beverage suitable for {{ recipe }}: <a href="{{ recipe.beverage.get_absolute_url }}">{{ recipe.beverage }}</a></h4>
     </section>
 {% endblock %}
